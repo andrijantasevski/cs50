@@ -108,6 +108,136 @@ Some types in C are:
 - long (larger integers)
 - string
 
+### Integer
+
+The integer data type is used for variables that will store integers.
+
+Integers always take up 4 bytes of memory or 32 bits, which means that the range of values they can store is limited to 32 bits worth of information.
+
+The range is from -2^31 to 2^31-1 (the minus -1 is because we need a space for zero).
+
+So the values that can fit in a 32-bit signed integer are:
+
+-2,147,483,648 to 2,147,483,647
+
+### Unsigned integer
+
+Unsigned integers are not a separate type, but they are a modifier to the integer type.
+
+Unsigned integers effectively double the range of the integer type, so the range is now from 0 to 4,294,967,295.
+
+Now the values are 2^32-1 (the minus -1 is because we need a space for zero).
+
+We use unsigned integers when the value wa want to store is positive and bigger than 2^31-1.
+
+### Short integer
+
+Short integers are a modifier to the integer type.
+
+The short is lesser in size than the integer by 2 bytes (16 bits), so it can store values from -32,768 to 32,767.
+
+There is also an unsigned short int, which effectively doubles the range of the short int.
+
+### Long integer
+
+Long integers are a modifier to the integer type.
+
+Long integers are 64 bits, so they can store values from -2^63 to 2^63-1.
+
+On 32-bit systems, the range is from -2^31 to 2^31-1.
+
+On 64-bit systems, the range is from -2^63 to 2^63-1.
+
+Sometimes, to get 64 bits, we need to use the **long long int** type.
+
+### Char
+
+The char data types is used for variables that will store single characters.
+
+Characters are stored in 1 byte (8 bits) of memory.
+
+The range of values that can be stored in a char is from -128 to 127.
+
+With ASCII, there is a mapping between the characters and numbers from the positive side of the range. For example, the character 'A' is 65, and the character 'Z' is 90.
+
+### Float
+
+The float data types is used for variable that will store floating point values or also known as real numbers.
+
+Floating point numbers always take up 4 bytes of memory.
+
+It's hard to define the range of values that can be stored in a float. Some of the bits can be used for the integer part and the rest for the decimal. Beecause there is 32 bits, we are limited in how precise we can be as we cannot store more than 32 bits of information.
+
+### Double
+
+Doubles are used to store floating point values or real numbers. However, unlike floats, doubles can store more information, so they are more precise.
+
+Doubles take up to 8 bytes (64 bits) of memory.
+
+### Void
+
+Void is not a data type, but it is a type that is used to indicate that a function does not return a value.
+
+The parameter list of a function can also be void, which means that the function does not take any parameters.
+
+```c
+// Return type is void
+void printHello(string name)
+{
+    printf("Hello, %s\n", name);
+}
+
+// Parameter list is void
+int main(void)
+{
+    printHello("World");
+}
+```
+
+### Bool
+
+Bool is not a primary data type. In fact, it did not exist in C until C99.
+
+It can take two values: true and false.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void)
+{
+    bool isTrue = true;
+    bool isFalse = false;
+
+    printf("isTrue: %i\n", isTrue);
+    printf("isFalse: %i\n", isFalse);
+}
+```
+
+### String
+
+String does not exist as a data type in C, but it is provided by the CS50 library. It is used to store a series of characters.
+
+A string in C is an array of characters. The array is terminated by a null character (\0).
+
+A string is called a string because it is a string of characters.
+
+### Structs
+
+Structs are used to group data together.
+
+We can use structs to create a new data type that can store multiple values.
+
+For example, we can create a struct that can store a name and an age.
+
+### Typedef
+
+Typedefs are used to create data types that we need for our programs.
+
+### Creating a variable
+
+### Declaring, assigning and initializing
+
 ### Format codes
 
 When we are using printf to print out values to the screen, we need to choose the correct format code that we want to print our value in. In our earlier example, we used %s, which is a format code or a placeholder for a string.
