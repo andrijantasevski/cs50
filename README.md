@@ -214,6 +214,8 @@ int main(void)
 }
 ```
 
+In C, every non-zero value is considered true, and zero is considered false.
+
 ### String
 
 String does not exist as a data type in C, but it is provided by the CS50 library. It is used to store a series of characters.
@@ -236,7 +238,37 @@ Typedefs are used to create data types that we need for our programs.
 
 ### Creating a variable
 
+To create a variable, we need to give it a type and a name.
+
+```c
+int number;
+```
+
+We can also create multiple variables of the same time on the same line:
+
+```c
+int number, number2, number3;
+```
+
 ### Declaring, assigning and initializing
+
+So what we did above was declaring a variable, which means that we have a type and a name for the variable, but the variable is not assigned a value.
+
+To assign a value to a variable, we need to use the **=** sign.
+
+```c
+// We declare a variable called number
+int number;
+
+// We assign a value to the variable number
+number = 5;
+```
+
+We can also declare a variable and assign at a value at the same time, this is called **initializing**.
+
+```c
+int number = 5;
+```
 
 ### Format codes
 
@@ -281,6 +313,62 @@ else
 {
     printf("x is equal to y\n");
 }
+```
+
+### Switch statement
+
+The switch statement is a conditional statement that permits enumeration of discrete cases, instead of relying on Boolean expressions.
+
+```c
+int x = 3;
+
+switch (x)
+{
+    case 1:
+        printf("x is 1\n");
+        break;
+    case 2:
+        printf("x is 2\n");
+        break;
+    case 3:
+        printf("x is 3\n");
+        break;
+    default:
+        printf("x is not 1, 2, or 3\n");
+}
+```
+
+Basically, the switch statement compares the value of the expression (x) to the values of each case. If the value of the case matches the value of the expression, then the code inside the case is executed.
+
+We need to be careful and use the break statement to break out of the switch statement because if we don't, we will fall through each case, unless that is the desired behavior.
+
+What this means is that if we don't have a break statement, the case is going to be executed for every case even if the value of the expression is not the same as the value of the case. All the code is going to be executed unless it encounters a break statement.
+
+```c
+int x = 1;
+
+switch (x)
+{
+    case 1:
+        printf("x is 1\n");
+    case 2:
+        printf("x is 2\n");
+    case 3:
+        printf("x is 3\n");
+        break;
+    default:
+        printf("x is not 1, 2, or 3\n");
+}
+```
+
+In the example above, we are going to print out x is 1, x is 2, and x is 3, because the first break is in case 3.
+
+### Ternary operator
+
+The ternary operator is a conditional operator that is used to assign a value to a variable based on a condition.
+
+```c
+int isUnderAge = age < 18 ? 1 : 0;
 ```
 
 ### Comparison operators
@@ -454,6 +542,27 @@ int main(void)
 }
 ```
 
+### Do-while loops
+
+Do-while loops are similar to while loops, but they first execute the code within the do statement and then check the condition, which means that the code within the do statement is executed at least once.
+
+```c
+do
+{
+    printf("meow\n");
+} while (0);
+```
+
+In this case, the code within the do statement is executed once, because the condition is always false.
+
+### When to use each loop
+
+- while loops are used when we want to a loop to repeat an unknown number of times or possibly not at all.
+
+- do-while loops are used when we want a loop to repeat an unkown number of times, but at least once.
+
+- for loops are used to repeat a discrete number of times, though we may not know how many times when the program is compiled.
+
 ### Functions and declaring prototypes
 
 In this case, if we want to declare the function after it's called, we need to define the prototype of the function before it is called at the top of the file.
@@ -604,6 +713,61 @@ printf("%.50f\n", (float) x / y);
 ### Floating-point imprecision
 
 The same issue arises when dividing num
+
+### Magic numbers
+
+Magic numbers are constants that we directly write into our code.
+
+For example, we can take a look at this function:
+
+```c
+card deal_cards(deck name)
+{
+    for (int i = 0; i < 52; i++)
+    {
+        // deal the card
+    }
+}
+```
+
+In the case above, the magic number is 52 because it is directly written into the code.
+
+We can improve this code by using a variable to assign the value of 52 to.
+
+```c
+card deal_cards(deck name)
+{
+    int deck_size = 52;
+    for (int i = 0; i < deck_size; i++)
+    {
+        // deal the card
+    }
+}
+```
+
+An issue with this code is that the variable can be changed, which means that we can't be sure that the value of the variable is 52.
+
+C provides a preprocessor directive, also called a macro that can be used to create symbolic constants.
+
+```c
+#define NAME REPLACEMENT
+
+// or the deck size can be defined as
+
+#define DECK_SIZE 52
+
+card deal_cards(deck name)
+{
+    for (int i = 0; i < DECK_SIZE; i++)
+    {
+        // deal the card
+    }
+}
+```
+
+At the time of compilation, #define goes through our code and replaces all instance of NAME with REPLACEMENT.
+
+So, basically, #include behaves like a copy and paste, but #define is more like a find and replace.
 
 ### Mario-less
 
