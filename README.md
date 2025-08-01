@@ -821,4 +821,112 @@ int main()
 }
 ```
 
-## Week 2
+## Week 2 - Arrays
+
+### Cryptography
+
+Cryptography is the art of scrambling information so we can communicate securely. For example, we can encrypt a message, a password, or a file.
+
+This text UIJT JT DT50 is scrambled so that it is hard to read what it says, but it is still readable as it leaks information with the 50 and the size of the text because we can see it says THIS IS CS50, as we are doing this in the course.
+
+Encryption is the act of hiding plain text from prying eyes.
+
+Decryiption is the act of taking an encrypted piece of text and returning it to a human-readable form.
+
+### Compiler
+
+A compiler is a specialized computer program that converts source code into machine code that can be understood by a computer.
+
+There are different compilers, some of the most known compilers for C are **clang** and **gcc**.
+
+We need to install clang differently on each operating system. O
+
+n Ubuntu, we can install it with:
+
+```bash
+sudo apt install clang
+```
+
+On Windows, we can install it with:
+
+```bash
+choco install llvm
+```
+
+On Mac, it usually comes with Xcode. The Apple version of clang is not the same as the public version of clang.
+
+### clang
+
+To compile a simple C program, we can use the clang comppiler.
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    printf("Hello, World\n");
+}
+```
+
+So, if we run the command clang and the name of the file, we get a file called **a.out** by default, which is **assembler output**
+
+```bash
+clang hello.c
+
+ls
+
+./a.out
+```
+
+So, a.out is just a default name for a file that is actually a binary executable.
+
+To specify a custom file for the program, we can pass the **-o** flag to the compiler like so:
+
+```bash
+clang hello.c -o hello
+```
+
+The code above would create an executable called hello instead of a.out.
+
+### Makefile
+
+Makefiles help us automate the process of compiling our C/C++ programs.Specifically, they are used to help decide what parts of a large program need to be recompiled.
+
+To create a makefile, we can run the following command in the termimal:
+
+```bash
+touch Makefile
+```
+
+We can add the following content to a Makefile:
+
+```makefile
+hello:
+    echo "Hello World"
+```
+
+Now, if we run **make** in the terminal, we are going to get the following
+
+```bash
+make
+
+echo "Hello World"
+Hello World
+```
+
+Whenever we run **make**, we are going to get the exact same output.
+
+### Makefile syntax
+
+A Makefile consits of a set of rules. A rule looks like this:
+
+```makefile
+targets: prerequisites
+    command
+    command
+    command
+```
+
+- The **targets** are the file names, separated by spaces. Typically, there is only one per rule.
+- The **commands** are a series of steps typically used to make the target(s). They (the commands) need to start with a **tab character** and not spaces.
+- The **prerequisites** are also file names, separated by spaces. These files need to exist before the commands for the target are run. These are called **dependencies**.
