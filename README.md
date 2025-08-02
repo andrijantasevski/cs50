@@ -930,3 +930,96 @@ targets: prerequisites
 - The **targets** are the file names, separated by spaces. Typically, there is only one per rule.
 - The **commands** are a series of steps typically used to make the target(s). They (the commands) need to start with a **tab character** and not spaces.
 - The **prerequisites** are also file names, separated by spaces. These files need to exist before the commands for the target are run. These are called **dependencies**.
+
+Let's take a look at the following example:
+
+```makefile
+hello:
+	echo "Hello World"
+	echo "This line will print if the file hello does not exist"
+```
+
+In this example, **hello** is a target, but since the target or file does not exist all, we are going to print the text in both the echo commands every time we run make.
+
+The target hello in this case has no prerequisites or dependencies and it has two commands.
+
+It is important to think about hello both as a target and a file because they are almost always tied together. Typically, when a target is run or rather the commands for the target are run, they will create a file with the same name as the target. However, in this case, no target file is created, which is why we run the command over and over again.
+
+Before, we move on with the following example, we need to create a **hello.c** file that is just going to print out Hello World in the terminal.
+
+Let's take a look at another example:
+
+```makefile
+hello:
+	clang hello.c -o hello
+```
+
+In this example, our target is hello, we have no prerequisites/dependencies. However, we have a command that produces a file with the same name as the target, which is usually the intended behavior when using makefiles.
+
+The first time that we run make, we produce the hello executable which is also the target file. If we run make for a second time, we get the following message:
+
+```bash
+make: `hello' is up to date.
+```
+
+We get this message because make has already produced that file and it knows that it shouldn't run the same command again. This is an issue, however, because if hello.c is modified, the code does not get compiled again.
+
+This is why we need to introduce prerequisites:
+
+```makefile
+hello: hello.c
+	clang hello.c -o hello
+```
+
+This means that whenever we run make, we check if hello.c has been changed, specifically it's timestamp. If it's been changed, then we recompile the program again.
+
+To recap, in the case above, hello is the target/file, hello.c is the prerequisite and clang and everything that follows it is the command.
+
+### Make clean
+
+Clean is often used as a target that removes the output of other target.
+
+It is not a special word in Make.
+
+So, clean in this case is not a target that is the first and default and it is not a prerequisite. This means that it'll never run unless we explicitly call make clean.
+
+```makefile
+hello: hello.c
+	clang hello.c -o hello
+
+clean:
+	rm -f hello
+```
+
+Clean is not intended to be a filename, if it appears as a filename, the target won't run.
+
+So if we want to recompile the program without changing the dependency hello.c, we can just run make clean, which would remove the hello file and then we can run make again, which would recompile the program.
+
+### Variables
+
+We can initialize variables by using a name for the variable, then by using the assignment operators (= or :=) and assigning a value to the variable.
+
+We get access to the variable by using $() or ${}.
+
+```makefile
+a := Hello World
+
+hello:
+    echo $(a)
+```
+
+### Simple Makefile
+
+```makefile
+CC := clang
+CFLAGS = -Wall
+
+main: main.o
+	$(CC) $(CFLAGS) -o main main.o
+
+main.o: main.c
+	$(CC) $(CFLAGS) -c main.c
+
+clean:
+	rm -rf main.o main
+```
