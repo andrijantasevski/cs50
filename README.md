@@ -888,6 +888,118 @@ clang hello.c -o hello
 
 The code above would create an executable called hello instead of a.out.
 
+### Compiling
+
+The process of turning the source code we write into a binary that is executable is called compiling.
+
+Compiling in C involes four major steps:
+
+- Preprocessing
+- Compiling
+- Assembling
+- Linking
+
+### Preprocessing
+
+Preprocessing is the first step during the compilation process where the header files, designated by a # (such as #include <cs50.h>) are effectively copied and pasted into our file.
+
+During this step, the code from stdio.h or cs50.h, for example is copied into our program.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void)
+{
+    string name = get_string("What's your name?");
+    printf("Hello World!\n");
+}
+```
+
+Essentially all the relevant code would be copied into our file like so:
+
+```c
+string get_string(string prompt) // this a prototype of the function
+int printf(string format, ...) // another prototype of a function
+
+int main(void)
+{
+    string name = get_string("What's your name?");
+    printf("Hello World!\n");
+}
+```
+
+### Compiling
+
+During the compilation process, our program is converted to assembly code.
+
+Assembly code is the code that is used to give instructions to the CPU.
+
+```assembly
+...
+main:
+    .cfi_startproc
+# BB#0:
+    pushq    %rbp
+.Ltmp0:
+    .cfi_def_cfa_offset 16
+.Ltmp1:
+    .cfi_offset %rbp, -16
+    movq    %rsp, %rbp
+.Ltmp2:
+    .cfi_def_cfa_register %rbp
+    subq    $16, %rsp
+    xorl    %eax, %eax
+    movl    %eax, %edi
+    movabsq    $.L.str, %rsi
+    movb    $0, %al
+    callq    get_string
+    movabsq    $.L.str.1, %rdi
+    movq    %rax, -8(%rbp)
+    movq    -8(%rbp), %rsi
+    movb    $0, %al
+    callq    printf
+    ...
+```
+
+### Assembling
+
+The assembling part converts our assembly code into machine code or binary, which can be visualized as follows:
+
+```
+01111111010001010100110001000110
+00000010000000010000000100000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000001000000000011111000000000
+00000001000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+10100000000000100000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+01000000000000000000000000000000
+00000000000000000100000000000000
+00001010000000000000000100000000
+01010101010010001000100111100101
+01001000100000111110110000010000
+00110001110000001000100111000111
+01001000101111100000000000000000
+00000000000000000000000000000000
+00000000000000001011000000000000
+11101000000000000000000000000000
+00000000010010001011111100000000
+00000000000000000000000000000000
+00000000000000000000000001001000
+...
+```
+
+### Linking
+
+During the linking step, the code from our included libraries is also converted into machine code and it is combined with our code and then the final executable is outputted.
+
 ### Makefile
 
 Makefiles help us automate the process of compiling our C/C++ programs.Specifically, they are used to help decide what parts of a large program need to be recompiled.
