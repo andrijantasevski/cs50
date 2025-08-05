@@ -1,97 +1,51 @@
+#include <cs50.h>
 #include <stdio.h>
 
-enum Direction
-{
-    LTR,
-    RTL
-};
-
-void printHash(int sizeOfRow, int emptySpaces, enum Direction direction);
+int get_pyramid_rows();
+void create_pyramid(int pyramidRows);
+void printChar(char chararacter[], int times);
 
 int main(void)
 {
-    int sizeOfPyramid = 2;
+    int pyramidRows = get_pyramid_rows();
 
-    for (int i = 0; i < sizeOfPyramid; i++)
+    create_pyramid(pyramidRows);
+}
+
+int get_pyramid_rows()
+{
+    int pyramidRows;
+    do
     {
-        int emptySpaces = sizeOfPyramid - (i + 1);
+        pyramidRows = get_int("Please enter the height of the pyramid: ");
+    } while (pyramidRows < 1 || pyramidRows > 8);
 
-        printHash(sizeOfPyramid, emptySpaces, RTL);
+    return pyramidRows;
+}
+void create_pyramid(int pyramidRows)
+{
+    for (int i = 0; i < pyramidRows; i++)
+    {
+        int emptySpaces = pyramidRows - (i + 1);
 
-        printf("  ");
+        int hashes = i + 1;
 
-        printHash(sizeOfPyramid, emptySpaces, LTR);
+        printChar(" ", emptySpaces);
+
+        printChar("#", hashes);
+
+        printChar(" ", 2);
+
+        printChar("#", hashes);
 
         printf("\n");
     }
 }
 
-void printHash(int sizeOfRow, int emptySpaces, enum Direction direction)
+void printChar(char character[], int times)
 {
-    if (direction == LTR)
+    for (int i = 0; i < times; i++)
     {
-        for (int i = sizeOfRow; i > 0; i--)
-        {
-            if (i - emptySpaces > 0)
-            {
-                printf("#");
-            }
-            else
-            {
-                printf(" ");
-            }
-        }
-    }
-    else
-    {
-        for (int i = 0; i < sizeOfRow; i++)
-        {
-            if (i < emptySpaces)
-            {
-                printf(" ");
-            }
-            else
-            {
-                printf("#");
-            }
-        }
+        printf("%s", character);
     }
 }
-
-// int main(void)
-// {
-//  int sizeOfPyramid = 4;
-
-//  for (int i = 0; i < sizeOfPyramid; i++)
-//  {
-//      int sizeOfRow = (sizeOfPyramid * 2) + 1;
-
-//      int emptySpaces = sizeOfPyramid - (i + 1);
-
-//      for (int j = 0; j < sizeOfRow; j++)
-//      {
-
-//          if (j == sizeOfPyramid)
-//          {
-//              printf(" ");
-//          }
-//          else if (j > sizeOfPyramid)
-//          {
-//              printf("#");
-//          }
-//          else
-//          {
-//              if (j < emptySpaces)
-//              {
-//                  printf(" ");
-//              }
-//              else
-//              {
-//                  printf("#");
-//              }
-//          }
-//      }
-
-//      printf("\n");
-//  }
-// }
