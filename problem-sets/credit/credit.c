@@ -1,13 +1,17 @@
+#include <cs50.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 long power(int base, int exponent);
+long get_card();
+string validate_card(long cardNumber);
 int get_long_int_length(long longInteger);
 int get_card_type(int cardLength);
 long get_card_numbers(long cardNumber, int cardLength, int cardNumbers);
 
 int main(void)
 {
-    long card = 4003600000000014;
+    long card = get_card();
 
     int cardLength = get_long_int_length(card);
 
@@ -28,6 +32,46 @@ long power(int base, int exponent)
     return powerOf;
 }
 
+long get_card()
+{
+    long cardNumber;
+    bool isCardValid;
+    do
+    {
+        cardNumber = get_long("Number: ");
+        string cardType = validate_card(cardNumber);
+
+    } while (!cardNumber || cardType == "INVALID");
+
+    return cardNumber;
+}
+
+string validate_card(long cardNumber)
+{
+    int cardLength = get_long_int_length(cardNumber);
+    int firstNumber = get_card_numbers(cardNumber, 1, cardLength);
+    int firstTwoNumbers = get_card_numbers(cardNumber, 2, cardLength);
+
+    if (cardLength == 13 && firstNumber == 4)
+    {
+        return "VISA";
+    }
+    else if (cardLength == 15 && firstNumber == 4)
+    {
+        return "AMEX";
+    }
+    else if (cardLength == 16 && firstNumber == 4)
+    {
+        return "VISA";
+    }
+    else if (cardLength == 16 && firstNumber == 5)
+    {
+        return "MASTERCARD";
+    }
+
+    return "INVALID";
+}
+
 int get_long_int_length(long longInteger)
 {
     long longIntegerCounter = longInteger;
@@ -41,21 +85,6 @@ int get_long_int_length(long longInteger)
     } while (longIntegerCounter > 0);
 
     return cardLength;
-}
-
-int get_card_type(int cardLength)
-{
-    switch (cardLength)
-    {
-    case 13:
-        break;
-    case 16:
-        break;
-    case 15:
-        break;
-    default:
-        return 0;
-    }
 }
 
 long get_card_numbers(long cardNumber, int cardNumbers, int cardLength)
