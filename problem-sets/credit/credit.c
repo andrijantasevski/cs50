@@ -2,11 +2,15 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-long power(int base, int exponent);
+#define INVALID 0
+#define VISA 1
+#define AMEX 2
+#define MASTERCARD 3
+
 long get_card();
-string validate_card(long cardNumber);
+short validate_card(long cardNumber);
 int get_long_int_length(long longInteger);
-int get_card_type(int cardLength);
+string get_card_type(short cardLength);
 long get_card_numbers(long cardNumber, int cardLength, int cardNumbers);
 
 int main(void)
@@ -16,55 +20,59 @@ int main(void)
     int cardLength = get_long_int_length(card);
 
     long firstTwoCardNumbers = get_card_numbers(card, 2, cardLength);
-
-    printf("%li", firstTwoCardNumbers);
-}
-
-long power(int base, int exponent)
-{
-    long powerOf = base;
-
-    for (int i = 0; i < exponent; i++)
-    {
-        powerOf *= base;
-    }
-
-    return powerOf;
 }
 
 long get_card()
 {
     long cardNumber;
-    bool isCardValid;
+    int cardType;
+
     do
     {
         cardNumber = get_long("Number: ");
-        string cardType = validate_card(cardNumber);
+        cardType = validate_card(cardNumber);
 
-    } while (!cardNumber || cardType == "INVALID");
+    } while (!cardNumber || !cardType);
 
     return cardNumber;
 }
 
-string validate_card(long cardNumber)
+short validate_card(long cardNumber)
 {
     int cardLength = get_long_int_length(cardNumber);
     int firstNumber = get_card_numbers(cardNumber, 1, cardLength);
-    int firstTwoNumbers = get_card_numbers(cardNumber, 2, cardLength);
 
     if (cardLength == 13 && firstNumber == 4)
     {
-        return "VISA";
+        return VISA;
     }
-    else if (cardLength == 15 && firstNumber == 4)
+    else if (cardLength == 15 && firstNumber == 3)
     {
-        return "AMEX";
+        return AMEX;
     }
     else if (cardLength == 16 && firstNumber == 4)
     {
-        return "VISA";
+        return VISA;
     }
     else if (cardLength == 16 && firstNumber == 5)
+    {
+        return MASTERCARD;
+    }
+
+    return INVALID;
+}
+
+string get_card_type(short cardType)
+{
+    if (cardType == VISA)
+    {
+        return "VISA";
+    }
+    else if (cardType == AMEX)
+    {
+        return "AMEX";
+    }
+    else if (cardType == MASTERCARD)
     {
         return "MASTERCARD";
     }
