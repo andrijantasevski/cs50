@@ -1135,3 +1135,13 @@ main.o: main.c
 clean:
 	rm -rf main.o main
 ```
+
+### Debugging
+
+One of the most useful ways to debug is by using **printf**, which is also called printf debugging.
+
+With printf, we can print out whatever we have stored in memory.
+
+### Setting up a debugger
+
+### Memory
