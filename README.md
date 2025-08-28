@@ -1047,8 +1047,8 @@ Let's take a look at the following example:
 
 ```makefile
 hello:
-	echo "Hello World"
-	echo "This line will print if the file hello does not exist"
+echo "Hello World"
+echo "This line will print if the file hello does not exist"
 ```
 
 In this example, **hello** is a target, but since the target or file does not exist all, we are going to print the text in both the echo commands every time we run make.
@@ -1063,7 +1063,7 @@ Let's take a look at another example:
 
 ```makefile
 hello:
-	clang hello.c -o hello
+clang hello.c -o hello
 ```
 
 In this example, our target is hello, we have no prerequisites/dependencies. However, we have a command that produces a file with the same name as the target, which is usually the intended behavior when using makefiles.
@@ -1080,7 +1080,7 @@ This is why we need to introduce prerequisites:
 
 ```makefile
 hello: hello.c
-	clang hello.c -o hello
+clang hello.c -o hello
 ```
 
 This means that whenever we run make, we check if hello.c has been changed, specifically it's timestamp. If it's been changed, then we recompile the program again.
@@ -1097,10 +1097,10 @@ So, clean in this case is not a target that is the first and default and it is n
 
 ```makefile
 hello: hello.c
-	clang hello.c -o hello
+clang hello.c -o hello
 
 clean:
-	rm -f hello
+rm -f hello
 ```
 
 Clean is not intended to be a filename, if it appears as a filename, the target won't run.
@@ -1127,13 +1127,13 @@ CC := clang
 CFLAGS = -Wall
 
 main: main.o
-	$(CC) $(CFLAGS) -o main main.o
+$(CC) $(CFLAGS) -o main main.o
 
 main.o: main.c
-	$(CC) $(CFLAGS) -c main.c
+$(CC) $(CFLAGS) -c main.c
 
 clean:
-	rm -rf main.o main
+rm -rf main.o main
 ```
 
 ### Debugging
@@ -1145,3 +1145,263 @@ With printf, we can print out whatever we have stored in memory.
 ### Setting up a debugger
 
 ### Memory
+
+Inside our computers, we have a finite amount of memory available to us.
+
+We can imagine the memory in our computers as a big matrix (rows with columns), where the column in each row is 1 byte (this is purely for explanation purposes). So, if we want to store a char, which is 1 byte, we would take up 1 column in a row. If we want to store an int, which requires 4 bytes, we would take up 4 columns of the row.
+
+Types like int or char always take up **contiguous memory**, which means that the memory they take is back-to-back.
+
+```c
+int main(void)
+{
+    int score1 = 72;
+    int score2 = 73;
+    int score3 = 33;
+}
+```
+
+When we run the program written above, we basically are asking the computer for 4 of the columns in the matrix/grid that we mentioned above for the first variable (score1), then another 4 bytes for the second variable (score2) and another 4 for the third variable (score3).
+
+The value of each variable is stored in memory back-to-back. However, the variables themselves do not necessarily need to be stored back-to-back in memory. For example, score1 and score2 can be stored back-to-back, while score3 can be stored at a different
+place/address.
+
+What the computer does is store the patterns of bits in those pieces of memory, so for the score1 variable, it stores the pattern for the number 72 in 32 bits: 00000000000000000000000001001000. It does the same for the other 2 variables as well.
+
+### Functions
+
+Nearly all languages have the concept of a function, but we can find that functions are named differently across languages.
+
+In C, they are named functions, but we can find the names: **procedures**, **methods** (in object oriented programming languages), or **subroutines**.
+
+Functions are essentially black boxes with a set of 0+ inputs and 1 output.
+
+In this case again, there are languages that allow us to return multiple outputs. For example, the language Go allows for multiple return values.
+
+```c
+func(a, b, c);
+```
+
+In the example above, **func** is the name of the function and **a**, **b**, **c** are the inputs to the function.
+
+```c
+add(a, b, c);
+add(3, 6, 7);
+```
+
+In the example above, we changed the inputs of a, b, c with actual values. The output is the result of the addition, which is 16.
+
+### Functions as black boxes
+
+Functions are called black boxes because if we are not writing the functions ourselves, we don't need to know the underlying implementation. Such an example is the **printf** function in C. We call the function very frequently with the necessary parameters, but we don't necesarilly need to know about the implementation.
+
+That is also part of the contract of using functions. The behavior should typically be predictable based on the name of the function. That's why most functions should have clear, obvious names, and should be well-documented.
+
+### Why use functions?
+
+Functions should be used to **organize** complicated problems into more manageable subparts, especially when our code starts becoming very large in size.
+
+Functions should be used to **simplify** our code as smaller components tend to be easier to design, implement, and debug. When our functions are simple and with a smaller scope, they can be also tested easily.
+
+Function should be designed to be **reused**, which means that we need to write them once but we can use them as often as we need.
+
+### Function declarations
+
+The first step to creating a function is to declare it. This gives the compiler a heads-up that a user-written function appears in code.
+
+Function declarations should always go to the top of our code, before we begin writing main().
+
+There is a standard form that every function declaration follows:
+
+```c
+return-type name(argument-list);
+```
+
+The **return-type** is the kind of variable the function will output.
+
+The **name** is what we want to call our function.
+
+The **argument-list** is the comma-separated set of inputs to our function, each of which has a type and a name.
+
+Below is a function that adds two integers:
+
+```c
+int add_two_integers(int a, int b);
+```
+
+The sum of the two integers is going to be an integer as well, which is why the return-type is int.
+
+Based on what the function does, we give it an appropriate name, which in this case is adding two integers.
+
+There are two inputs to this function. There's nothing important about these inputs as far as we know, so giving them simple names is all right.
+
+### Function definitions
+
+The second step to creating a function is to define it.
+
+This allows for predictable behavior when the function is called with inputs.
+
+First we declare our function above the main function.
+
+```c
+float multiple_two_reals(float x, float y);
+
+int main(void)
+{
+    // some code
+}
+```
+
+In the second step, we define our function somewhere below our main function with the actual implementation.
+
+```c
+float multiple_two_reals(float x, float y)
+{
+    float product = x * y;
+    return product;
+}
+```
+
+### Function calls
+
+Now that we have declared and defined a function, we need to call it to use it.
+
+To call a function and use it, we simply pass the appropriate arguments and assign its return value to something of the correct type.
+
+```c
+int main(void)
+{
+    float product = multiple_two_reals(3, 5);
+}
+```
+
+### Functions and void
+
+There are functions that take no inputs. When a function takes no input, we declare the function as having a **void** argument list.
+
+```c
+int get_random_number(void);
+```
+
+On the other hand, when functions don't have an output, we declare the function as having a **void** return type.
+
+```c
+void printName(string name);
+```
+
+### Practice problem - valid_triangle
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+bool valid_triangle(int a, int b, int c);
+
+int main(void)
+{
+    bool isTriangleValid = valid_triangle(1, 3, 3);
+}
+
+bool valid_triangle(float x, float y, float z)
+{
+    if (x <= 0 || y <= 0 || z <= 0)
+    {
+        return false;
+    }
+
+    if ((x + y <= z) || (x + z <= y) || (y + z <= x))
+    {
+        return false;
+    }
+
+    return true;
+}
+```
+
+### Variable Scope
+
+Scope is a characteristic of a variable that defines from which functions that variable may be accessed.
+
+There can be **local** and **global** variables.
+
+**Local variables** can only be accessed within the functions in which they are created. This means that they can't be used by other functions in our program.
+
+**Global variables** can be accessed by any function in the program. This type of variable is declared outside of all the functions of our program, which enables us to use it in any of our functions of the program.
+
+```c
+int main(void)
+{
+    int result = triple(5);
+}
+
+int triple(int x)
+{
+    return x * 3;
+}
+```
+
+In our case above the variable **result** is local to the main function. On the other hand, the variable **x** that is an argument in the triple function is local to the function itself and cannot be accessed by any other function in the program.
+
+Let's take a look at another example:
+
+```c
+#include <stdio.h>
+
+float global = 0.5050;
+
+int main(void)
+{
+    triple();
+    printf("%f\n", global);
+}
+
+void triple(void)
+{
+    global *= 3;
+}
+```
+
+In the case above, we have a variable called global that has a global scope. We can access that variable within any function of our program, which is why we would print out to the console 1.515.
+
+Declaring global functions and modifying them needs to be used carefully as it can lead to mistakes if the same variableis used across many different functions in our program. Mutating global variables can be a source of bugs.
+
+We need to also be very careful when it comes to naming variables because we can have issues if we name variables with the same names in local and global scopes.
+
+### Variables - passed by value
+
+For the most part, local variables in C are **passed by value** in function calls.
+
+When a variable is passed by value, the callee or the function that is called receives a copy of the passed variable andnot the variable itself. That means that the variable in the caller or the original function is **unchanged** unless we **overwrite** it.
+
+Let's take a look at the example below:
+
+```c
+int main(void)
+{
+    int foo = 4;
+    triple(foo);
+
+}
+
+int triple(int x)
+{
+    return x *= 3;
+}
+```
+
+In the example above, we pass the value of the variable foo to the triple function or the callee. We don't pass the variable itself. We basically have a new copy of the variable in the triple function itself, which is why the variable in the caller function or main would remain unchanged.
+
+```c
+int main(void)
+{
+    int foo = 4;
+    foo = triple(foo);
+}
+
+int triple(int x)
+{
+    return x *= 3;
+}
+```
+
+In the example right above, we change the value of the foo variable because we overwrite it with the return value of thetriple function, however, the variable x still remains local and passed by value in the triple function.
