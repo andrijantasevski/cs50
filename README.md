@@ -1047,8 +1047,8 @@ Let's take a look at the following example:
 
 ```makefile
 hello:
-echo "Hello World"
-echo "This line will print if the file hello does not exist"
+    echo "Hello World"
+    echo "This line will print if the file hello does not exist"
 ```
 
 In this example, **hello** is a target, but since the target or file does not exist all, we are going to print the text in both the echo commands every time we run make.
@@ -1063,7 +1063,7 @@ Let's take a look at another example:
 
 ```makefile
 hello:
-clang hello.c -o hello
+    clang hello.c -o hello
 ```
 
 In this example, our target is hello, we have no prerequisites/dependencies. However, we have a command that produces a file with the same name as the target, which is usually the intended behavior when using makefiles.
@@ -1080,7 +1080,7 @@ This is why we need to introduce prerequisites:
 
 ```makefile
 hello: hello.c
-clang hello.c -o hello
+    clang hello.c -o hello
 ```
 
 This means that whenever we run make, we check if hello.c has been changed, specifically it's timestamp. If it's been changed, then we recompile the program again.
@@ -1097,10 +1097,10 @@ So, clean in this case is not a target that is the first and default and it is n
 
 ```makefile
 hello: hello.c
-clang hello.c -o hello
+    clang hello.c -o hello
 
 clean:
-rm -f hello
+    rm -f hello
 ```
 
 Clean is not intended to be a filename, if it appears as a filename, the target won't run.
@@ -1127,13 +1127,13 @@ CC := clang
 CFLAGS = -Wall
 
 main: main.o
-$(CC) $(CFLAGS) -o main main.o
+    $(CC) $(CFLAGS) -o main main.o
 
 main.o: main.c
-$(CC) $(CFLAGS) -c main.c
+    $(CC) $(CFLAGS) -c main.c
 
 clean:
-rm -rf main.o main
+    rm -rf main.o main
 ```
 
 ### Debugging
@@ -1167,6 +1167,333 @@ The value of each variable is stored in memory back-to-back. However, the variab
 place/address.
 
 What the computer does is store the patterns of bits in those pieces of memory, so for the score1 variable, it stores the pattern for the number 72 in 32 bits: 00000000000000000000000001001000. It does the same for the other 2 variables as well.
+
+### Arrays
+
+Arrays are a fundamental data structure.
+
+Arrays are a sequence of values that are stored **back-to-back** in memory. This means that the values in an array are stored contiguosly in memory.
+
+The values of an array need to be of the same type, for example, all values can be either int or char.
+
+We can conclude that we use arrays to hold values of the same type at contiguous memory locations.
+
+### Array indexing
+
+In C, the elements of an array are indexed starting from 0, which is also one of the major reasons we count from zero.
+
+We can then say that if an array consists of _n_ elements, the first element is located at 0 and the last element is located at n-1. For example, if our array consists of 50 elements, the first element is at index 0 and the last element is at index 49.
+
+C is very lenient when it comes to accessing indices of arrays. At compile time, we are able to access elements that are outside of bounds of our array. At runtime, however, we would get a segmentation fault.
+
+### Array declarations
+
+Arrays are typically declared in the following manner:
+
+```c
+type name[size]
+```
+
+**Type** is the kind of variable each element of the array will be.
+
+**Name** is what we want to call our array.
+
+**Size** is how many elements we would like our array to contain.
+
+Let's take a look at this example:
+
+```c
+int studentGrades[40];
+```
+
+The type of the elements of the array is going to be int. The name is studentGrades and its size is 40 elements or ints.
+
+### Array instatiation
+
+To instantiate an array at the same time while declaring it, we can use the following syntax:
+
+```c
+bool truthable[3] = { false, true, true };
+```
+
+We can also declare an array and then fill out the elements with values with the **individual element syntax**:
+
+```c
+bool truthtable[3];
+truthtable[0] = false;
+truthtable[1] = true;
+truthtable[2] = false;
+```
+
+We can also declare an array without specifying the number of elements, but we have to instantiate the array immediately with all the elements its going to contain. This way the compiler knows the size of the array at compiletime.
+
+```c
+bool truthtable[] = { false, true, true };
+```
+
+Arrays can consist of more than a single dimension. In fact, we can have as many specifiers as we wish.
+
+```c
+bool battleship[10][10];
+```
+
+In the example above, we can think of the array as a 10x10 grid of cells, where we have 10 rows where each row has 10 columns.
+
+In memory though, it's really just a 100-element one-dimensional array.
+
+Multi-dimensional arrays are great abstractions to help visualize game boards or other complex representations.
+
+### Array assignment
+
+We can treat individual elements of arrays as variable. This means that we can assign indivudal elements of an array to a variable, like this:
+
+```c
+int number[3] = { 0, 1, 2 };
+
+int numberAtIndexZero = number[0];
+```
+
+It is not legal, however, to assign one array to another in C. For example, we can't do the following:
+
+```c
+int foo[3] = { 0, 1, 2 };
+int bar[3];
+
+bar = foo;
+```
+
+The assignment of bar to foo is not allowed. Instead, we need to copy the array into the other, by using a for loop, which can be a bit time consuming.
+
+```c
+int foo[5] = { 1, 2, 3, 4, 5 };
+int bar[5];
+
+for (int i = 0; i < 5; i++)
+{
+    bar[j] = foo[j];
+}
+```
+
+### Arrays as passed by reference
+
+Most variables in C are **passed by value** in function calls, which means that the callee or the function call receives a copy of the value and not the actual value and where it is stored in memory.
+
+Arrays do not follow this rule and we say that they are **passed by reference**. They receive the actual array and not a copy of it. The reason for this is so that our code is faster and we don't need to copy over all the time arrays with big amount of elements.
+
+We need to be very careful when passing arrays to functions because if we change the value of an element in the array, we are changing the original array, which in a lot of cases may not be the desired result.
+
+### Constants
+
+If there is a value that we don't want to change and that is not going to be changed and is also going to be used across our whole program, we can define a constant.
+
+Previously we took a look at macros and defining them at the top of our file. However, macros do not have a data type defined explicitly, whereas constants do.
+
+We usually declare and initialize constants at the top of our file in capital letters.
+
+```c
+const int DAYS_IN_A_WEEK = 7;
+```
+
+### Strings
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    char c1 = 'H';
+    char c2 = 'I';
+    char c3 = '!';
+
+    printf("%c%c%c\n", c1, c2, c3);
+}
+```
+
+In the example above, we have written each of the letters within single quotes because they are of type char.
+
+When we print this out, we will get HI!. We are not printing it as a string, but rather as char, char, char.
+
+```c
+#include<stdio.h>
+
+int main(void)
+{
+    char c1 = 'H';
+    char c2 = 'I';
+    char c3 = '!';
+
+    printf("%i %i %i\n");
+}
+```
+
+When we print out the characters as integers to see their underlying implementation/value, we get the corresponding ASCII values of the characters, namely: 72, 73,33.
+
+In memory, each character would take 1 byte because chars are 1 byte and in memory, we would actually store the pattern of bits for each number. For example, for H, we would need to get the pattern of bits for 72, which is: 01001000.
+
+### Strings as sequences of characters.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void)
+{
+    string s = "HI!"
+    printf("%s\n, s);
+}
+```
+
+When we print this out, we would get HI! once again, however, this time, we store the string in contiguous memory as a sequence of characters or as **an array of characters**.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void)
+{
+    string s = "HI!";
+    printf("%c%c%c\n", s[0], s[1], s[2]);
+}
+```
+
+If we print this out we get the exact same result, HI! because a string is an array of characters and we can access each character in the array by its index.
+
+### String and NUL character
+
+When strings are stored in memory, we need to know where the string ends. For this purpose we use the **NUL character**, which is an actual **0** that is attached to the end of each array of characters. So, the actual length of each array of characters for a string is the length of the string plus one byte to mark where the string ends with **00000000**.
+
+Typically, we do not write the **0** as a **0**, but rather, we write **\0**, which is a convetion.
+
+If we open up an ASCII chart, we can find the **sentinel** or **terminating** character NUL for the value 0.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void)
+{
+    string s = "HI!";
+    printf("%i %i %i %i\n", s[0], s[1], s[2], s[3]);
+}
+```
+
+In this case, if we print out the integer values behind the characters of the string HI!, we would get 72, 73, 33, 0. The **0** would be NUL character or the sign where the string is terminated.
+
+### String length
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void)
+{
+    string name = get_string("Name: ");
+
+    int n = 0;
+
+    while (name[n] != '\0')
+    {
+        n++;
+    }
+
+    printf("%i\n", n);
+}
+```
+
+To check the length of a string, we can loop over a string with a while loop until we encounter the NUL character or where the string terminates. We can increment an int variable whenever we see a character.
+
+We can also extract this functionality into a function since it is so common.
+
+### string.h
+
+There is a standard C library for working with strings, which we can use by including the header file **string.h**.
+
+In this standard string library, there is such a function for checking the string length, which would be strlen.
+
+Instead of writing such a common function to find out the string length, we can use **strlen**.
+
+### ctype.h
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+    string s = get_string("Input: ");
+    printf("Output: ");
+
+    for (int i = 0, length = strlen(s); i < length ;i++)
+    {
+        printf("%c", s[i]);
+    }
+
+    printf("\n");
+}
+```
+In the code snippet above, we have introduced a new way of declaring and initializing a variable that we use in for-loops. We can inline a variable that is used as the boundary to which the loop should get to and we can use it in our condition.
+
+The variable is defined and inlined there so that the value gets calculated once, in this case the length of the string and we access only the value of the variable __length__.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+    string s = get_string("Before: ");
+    printf("After:  ");
+
+    for (int i = 0, n = strlen(s); i < n; i++)
+    {
+        if (s[i] >= 'a' && s[i] <= 'z')
+        {
+           printf("%c", s[i] - ('a' - 'A'); 
+        }
+        else
+        {
+            printf("%c", s[i]);
+        }
+    }
+}
+```
+
+In the code above we are printing out all of the letters of the string as uppercase.
+
+The main logic is in the if-statement in the for-loop.
+
+We know that each character in C is actually just the ASCII number/integer, in the if condition, we check if the letter is lowercase or rather, whether it is in the range of 97 to 122. If it is within that range, it means it is lowercase. If it is not, we print it out as it is.
+
+To make it uppercase, however, we can calculate the difference between the lowercase letter and the uppercase letter, which is always 32.
+
+We don't even need to hardcode the 32 itself as well, as we can calculate what is the distance between __lowercase a__ and __capital A__.
+
+Even though it is great to know the underlying implementation of how we can make letters lowercase and uppercase, we can use the standard library in C called __ctype__. It has various functions, some of which are __toupper__ and __tolower__.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+    string s = get_string("Before: ");
+    printf("After:  ");
+
+    for (int i = 0; n = strlen(s); i < n; i++)
+    {
+        printf("%c", toupper(s[i]));
+    }
+}
+```
+
+This way we have simplified our code by using a standard library function that performs a similar function to what we had implemented previously.
+
+
+### Command line arguments
+
 
 ### Functions
 
