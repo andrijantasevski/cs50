@@ -1494,7 +1494,116 @@ This way we have simplified our code by using a standard library function that p
 
 ### Command line arguments
 
+Command line arguments are the arguments that are passed to our program at the command line. For example, all the statements that we type after __clang__ are considered command line arguments. We can also use these command line arguments in our own programs.
 
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void)
+{
+    string answer = get_string("What's your name? ");
+    printf("hello, %s\n", answer);
+}
+```
+
+In the code above, we run the program and after we run it, we prompt the user to enter some string, which in this case is their name. However, we can provide a value to the program even before we run it through command line arguments.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(int argc, string argv[])
+{
+    if (argc == 2)
+    {
+        printf("hello, %s\n", argv[1]);
+    }   
+    else
+    {
+        printf("hello, world\n");
+    }
+}
+```
+
+So far in our code, we have been creating our functions with a void type for the argument list because we did not read or need the command line arguments. 
+
+The main function takes __2 arguments__, which are __argc__ and __argv__.
+
+The argument __argc__ is of type __int__ and it gives us the amount of arguments that have been passed to the main function.
+
+The argument __argv__ is an __array of strings__ and it gives us the values of the parameters that have been passed to the main function.
+
+The __first parameter__ that is passed to the main function is _always_ the __name of the program__ whereas the other parameters are the ones we pass to the program as the users.
+
+Technically, the parameters can be named anything we want to, but it is the convention to name them argc and argv.
+
+The name __argc__ means __argument count__, which is associated with its use.
+
+The name __argv__ means __argument vector__.
+
+In our program above, we are checking if the number of argument is 2. This means that we passed only 1 argument becuase the first one is always the name of the program. If we have passed 2 arguments, we just print out hello and the value provided to the program in the first argument.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(int argc, string argv[])
+{
+    for (int i = 0; i < argc; i++)
+    {
+        printf("%s\n", argv[i]);
+    }
+}
+```
+In the example above, we are printing out all the arguments provided to a program by creating a for-loop based on the amount of arguments passed to the main function.
+
+It is important not to overstep the bounds of the argv array because it is very likely that we get a __segmentation fault__.
+
+### Exit status
+
+The reason as to why the main function has a __return__ type of __int__ is because programs have a convention of returning an int when they finish, either successfully or unsuccessfully. The integers that they exit with are called __exit codes__ or an __exit status__.
+
+By convention, whenever a program exits with the integer 0, it means that it has executed successfully and that there are no errors. When the program exits with an integer other than 0, it means that it has not executed successfully. 
+
+The reason for choosing this is because there are many different kinds of issues that we need to describe as errors, which is why its maybe counterintuitive that 0 (false) is the success code. For example, we have an error code 404 for not found in web browsers.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(int argc, string argv[])
+{
+    if (argc != 2)
+    {
+        printf("Missing command line argument\n");
+        return 1;
+    }
+
+    printf("hello, %s\n", argv[1]);
+    return 0;
+}
+```
+
+In the program above, we return 1 if the number of arguments is different than 2, which means that the program did not execute successfully. If it executes successfully, it prints out the greeting and returns a status 0.
+
+To check the exit status code of the most recently executed program, we can use the following command in the terminal: __echo $?__.
+
+### Encryption
+
+Encryption is the art of ciphering and deciphering a message.
+
+Encryption is basically a process of __scrambling__ information but in a __reversible__ way, because it would be pointless if we scramble the information and then can't unscramble it back.
+
+The input is what we call a __plaintext__ and the scrambled text is the __ciphertext__.
+
+The function that scrambles the text or performs the action of ciphering is called __cipher__.
+
+Ciphers rely on __keys__ or __secrets__, which are provided to the cipher as the second input besides the plaintext.
+
+Caesar's cipher is a technique where we pass a plaintext and a number as a key, which would be the number of letters that we want to rotate each letter of the alphabet for. For example, for a very simple case, if we pass the plaintext __A__ and the key __one (1)__, we would rotate the letter 1 place and we would get the letter __B__ as the cipher text.
+
+If we want to decrypt that message, we need to pass a key again, but in that case we would need to pass -1, which would rotate the letter of the alphabet one letter back and we would get the original text again, which was A.
 ### Functions
 
 Nearly all languages have the concept of a function, but we can find that functions are named differently across languages.
