@@ -1450,7 +1450,7 @@ int main(void)
     {
         if (s[i] >= 'a' && s[i] <= 'z')
         {
-           printf("%c", s[i] - ('a' - 'A'); 
+           printf("%c", s[i] - ('a' - 'A');
         }
         else
         {
@@ -1518,7 +1518,7 @@ int main(int argc, string argv[])
     if (argc == 2)
     {
         printf("hello, %s\n", argv[1]);
-    }   
+    }
     else
     {
         printf("hello, world\n");
@@ -1526,7 +1526,7 @@ int main(int argc, string argv[])
 }
 ```
 
-So far in our code, we have been creating our functions with a void type for the argument list because we did not read or need the command line arguments. 
+So far in our code, we have been creating our functions with a void type for the argument list because we did not read or need the command line arguments.
 
 The main function takes __2 arguments__, which are __argc__ and __argv__.
 
@@ -1564,7 +1564,7 @@ It is important not to overstep the bounds of the argv array because it is very 
 
 The reason as to why the main function has a __return__ type of __int__ is because programs have a convention of returning an int when they finish, either successfully or unsuccessfully. The integers that they exit with are called __exit codes__ or an __exit status__.
 
-By convention, whenever a program exits with the integer 0, it means that it has executed successfully and that there are no errors. When the program exits with an integer other than 0, it means that it has not executed successfully. 
+By convention, whenever a program exits with the integer 0, it means that it has executed successfully and that there are no errors. When the program exits with an integer other than 0, it means that it has not executed successfully.
 
 The reason for choosing this is because there are many different kinds of issues that we need to describe as errors, which is why its maybe counterintuitive that 0 (false) is the success code. For example, we have an error code 404 for not found in web browsers.
 
@@ -1841,3 +1841,143 @@ int triple(int x)
 ```
 
 In the example right above, we change the value of the foo variable because we overwrite it with the return value of thetriple function, however, the variable x still remains local and passed by value in the triple function.
+
+## Week 3
+
+### Linear search
+
+Previously, we said that arrays are data structures that can store N-amount of elements of a certain type (int, char etc.) in contiguous memory or rather back-to-back.
+
+```c
+int numbers[] = {1, 2, 3};
+```
+For example, in this case, the numbers 1, 2 and 3 are stored one after the other in memory or contiguously.
+
+If we want to find a specific number in that array, let's say the number 3, we as humans can just take a look at it and say that it is in the last position. However, the computer doesn't know that the number 3 is in the last position or the index 2 of the array.
+
+We can therefore imagine that these values are hidden behind a closed door that we need to open so we can see their value and check if it is the one we are looking for, in this case, the int 3.
+
+For the search of the value 3 to be effective and repeatable, we need to do it methodically with an algorithm.
+
+One of the simplest methods for searching for an element in array is __linear search__.
+
+In linear search, the idea of the algorithm is to iterate across the array from left to right, searching for a specified element.
+
+In _pseudocode_ the algorithm would be as follows:
+
+- Repeat starting at the first element
+- If the first element is what you are looking for (the target), stop
+- Otherwise, move to the next element
+
+So, if we want to find the int 3 in the array of 1, 2, 3, we would take the following steps:
+
+- Repeat starting at the first element
+- Is element at index[0], its value is 1? No, it is not, move on to the next element.
+- Is element at index[1], its value is 2? No, it is not, move on to the next element.
+- Is element at index[2], its value is 3? Yes, the value is 3, the one we are looking for.
+
+If we wanted to find the number 4 in the array of 1, 2, 3, we would have performed all the steps, but we wouldn't have found the number 4 as it is nonexistent. This doesn't mean that the algorithm failed, it just didnt't find the number we were looking for.
+
+Therefore, the __worst-case scenario__ for linear search is that we have to look through the entire array of n elements, either because the target is the __last__ element or it doesn't exist in the array at all.
+
+The __best-case scenario__, on the other hand, would be for the target element to be the __first__ element in the array, so we can stop looking immediately after we start.
+
+We can say that the worst-case scenario takes __N amount of steps__, in this case, if the array is 500 elements, it would take 500 steps.
+
+In the best-case scenario it would take __1 step__ no matter the size of the array if the element we are looking for is in the first place of the array.
+
+```c
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int linear_search_int(int array[], int target);
+
+int main(int argc, char *argv[])
+{
+    int array[11] = {3, 4, 5, 6, 7, 1, 10, 20, 31, 41, 80};
+
+    int isElementInArray = linear_search_int(array, 7);
+
+    printf("Is element %i in array? %s\n", 7, isElementInArray ? "Yes" : "No");
+}
+
+int linear_search_int(int array[], int target)
+{
+    for (int i = 0; i < 11; i++)
+    {
+        if (array[i] == target)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+```
+
+## Binary search
+
+There are other more efficient algorithms for searching through an array, one of those algorithms is called __binary search__.
+
+As opposed to linear search, binary search has a __precondition__: the array needs to be __sorted__. If the array is not sorted, then we cannot make assumptions about the array's contents.
+
+The idea of the algorithm for binary search is __divide and conquer__.
+
+A divide-and-conquer algorithm recursively breaks down a problem into two or more sub-problems of the same related type, until these become simple enough to be solved directly.
+
+__Binary search__ works by reducing the search area by __half__ each time, trying to find a target number.
+
+The __pseudocode__ for binary search is the following:
+
+- Repeat until the (sub)array is of size 0:
+- Calculate the middle point of the current (sub)array
+- If the target is at the middle, stop
+- Otherwise, if the target is less than what's at the middle, repeat, change the end point to be just to the left of the middle.
+- Otherwise, if the target is greater than what's at the middle, repeat, changing the start point to be just to the right of the middle.
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <math.h>
+
+int binary_search(int array[], int arraySize, int target);
+
+int main(void)
+{
+    int sortedArray[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 20, 50, 60, 70, 90};
+
+    int sortedArraySize = sizeof(sortedArray) / sizeof(int);
+
+    int isTargetElementFound = binary_search(sortedArray, sortedArraySize, 10);
+
+    printf("Is target element %i in array? %s\n", 1, isTargetElementFound ? "Yes" : "No");
+}
+
+int binary_search(int array[], int sortedArraySize, int target)
+{
+    int startingPoint = 0;
+    int endingPoint = sortedArraySize - 1;
+
+    while (startingPoint <= endingPoint)
+    {
+        int middlePoint = round((startingPoint + endingPoint) / 2.0);
+
+        if (array[middlePoint] == target)
+        {
+            return 1;
+        }
+        else if (target < array[middlePoint])
+        {
+            endingPoint = middlePoint - 1;
+        }
+        else if (target > array[middlePoint])
+        {
+            startingPoint = middlePoint + 1;
+        }
+    }
+
+    return 0;
+}
+```
