@@ -85,7 +85,7 @@ int validate_key(int argc, string argv[])
         return INCORRECT_KEY_LENGTH;
     }
 
-    if (!are_elements_in_string_alpha(argv[0]))
+    if (!are_elements_in_string_alpha(argv[1]))
     {
         return INCORRECT_AMOUNT_ARGS;
     }
