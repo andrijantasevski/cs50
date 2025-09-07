@@ -1952,7 +1952,7 @@ int main(void)
 
     int isTargetElementFound = binary_search(sortedArray, sortedArraySize, 10);
 
-    printf("Is target element %i in array? %s\n", 1, isTargetElementFound ? "Yes" : "No");
+    printf("Is target element %i in array? %s\n", 10, isTargetElementFound ? "Yes" : "No");
 }
 
 int binary_search(int array[], int sortedArraySize, int target)
@@ -1981,3 +1981,62 @@ int binary_search(int array[], int sortedArraySize, int target)
     return 0;
 }
 ```
+### Binary search vs. linear search
+
+So far we have seen that when we are searching for an element using linear search, the steps of the algorithm increase as the data increases. For example, if we have an array of 100 elements and the element is in last place, the algorithm would take 100 steps to complete as it would have to check every element in the array.
+
+In contrast, we can notice that binary search eliminates half of the elements every time we perform a step of searching. So if we have an array of 100 elements, it would take us 7 steps in the worst case to find the element we are looking for.
+
+The amount of steps performed when searching for an element with linear search always __grows linearly__ with the amount of elements of the dataset or array, as the name itself implies.
+
+The amount of steps performed increases when searching for an element with __binary search__ as we __double__ the elements in the data set.
+
+### Running time
+
+When we write and design our algorithms, it is always important to consider their efficiency.
+
+The efficiency of algorithms isn't measured in raw time, like in seconds or minutes because that can vary depending on the underlying hardware. For example, if we execute the same algorithm on hardware from 20 years ago and today, the execution might be faster on today's hardware, but that doesn't make the algorithm more efficient.
+
+Instead, the efficiency of algorithms is measured in the number of steps an algorithm takes as the input increases.
+
+### Asymptotic notation
+
+To help quantify the efficiency of an algorithm, we use __asymptotic notation__ in computer science. Specifically, it is used to easy communication regarding __time complexity__.
+
+There are mainly three asymptotic notations:
+
+- Big-O Notation (O-notation)
+- Omega Notation (Ω-notation)
+- Theta Notation (Θ-notation)
+
+Big-O notation is used for analyzing the worst-case complexity of an algorithm or the maximum number of steps it would take to complete it relative to the elements of the input.
+
+Omega notation is used to analyze the best-case complexity of an algorithm.
+
+Theta notation is used to analyze the average-case complexity of an algorithm.
+
+### Big O
+
+As previously mentioned Big-O notation is used for analyzing the worst-case complexity of an algorithm.
+
+It aims to give an answer to the following question: _if there are N data elements, how many steps will the algorithm take?_
+
+Let's apply this question to linear search.
+
+For an array or data set of __N data elements__, linear search would take __N amount of steps__.
+
+In other words, we can say that linear search is O(N) or __Big O of N__. It can also be referred to as __Order of N__.
+
+If an algorithm has an O(N), we can also say that it has __linear time__.
+
+The most common Big-O notations are the following:
+
+- 𝑂(𝑛^2)
+- O(nlogn)
+- O(n)
+- O(logn)
+- O(1)
+
+### O(1)
+
+When we read elements from an array by their index, we can say that the algorithm takes __1 step__ regardless of the amount of data elements. Expressed in Big-O notation, we can say that it would take __O(1)__.
