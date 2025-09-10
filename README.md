@@ -2123,4 +2123,20 @@ In terms of Big-O notation in computer science, whenever we say O(log N), we act
 
 So if we go back to the original question, _if there are N data elements, how many steps will an algorithm take?_
 
-We can say that the algorithm O(log N) would take __log~2 N steps__. So, if there are 8 elements, the algorithm would take 3 steps because __log~2 8 = 3\__
+We can say that the algorithm O(log N) would take __log~2 N steps__. So, if there are 8 elements, the algorithm would take 3 steps because __log~2 8 = 3\__.
+
+To put it in other words, if we keep dividing the 8 elements in half, it would take us three steps to end up with 1 element. We basically divide the array in half until we narrow our search down to the correct number.
+
+We can then conclude that __O(log N) algorithm takes as many steps as it takes to keep halving the data elements until we remain with 1.__
+
+N elements  O(N)  O(log N)
+8           8     3
+16          16    4
+32          32    5
+64          64    6
+128         128   7
+256         256   8
+512         512   9
+1024        1024  10
+
+From the data above we can once again say that the O(N) algorithm takes as many steps as there are data elements and the O(log N) algorithm takes only 1 step extra as the data doubles.
