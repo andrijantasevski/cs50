@@ -2040,3 +2040,87 @@ The most common Big-O notations are the following:
 ### O(1)
 
 When we read elements from an array by their index, we can say that the algorithm takes __1 step__ regardless of the amount of data elements. Expressed in Big-O notation, we can say that it would take __O(1)__.
+
+So, now if we ask the question from above again, _if there are N data elements, how many steps will the algorithm take?_, the answer would be that the reading takes only one step.
+
+We can observe from this example that the answer has nothing to do with N. In fact, as the input scales, the reading from the array will __always__ take __one step__. This makes O(1) the fastest kind of algorithm because there is only 1 step no matter the size of the input.
+
+We also refer to algorithms that have O(1) as algorithms with a __constant time__.
+
+Based on what we have said about algorithms that have a constant time, if an algorithm consitutes of 3 steps regardless of the amount of N data elements, we might say that that algorithm is O(3). However, that is __wrong__.
+
+The notation O(1) does not intended to describe the amount of steps that an algorithm would take, but instead, it intends to show that the time of the algorithm is constant or rather that the number of steps does not increase as the input scales. Based on this knowledge, we can say that when an algorithm has a fixed amount of steps or has a constant time, we always mark it with O(1).
+
+In other words, algorithms that take 1 step, 3 steps or 100 steps are the same kind of algorithms, because they have a constant time.
+
+### O(N)
+
+O(N) type of algorithms are different from O(1) algorithms because their performance is affected as the input increases. More specifically, it's a kind of algorithm whose steps increase __in direct proportion__ to the data as the data increases.
+
+O(N) algorithms tell us about the proportional relationship between the data and the algorithm's efficiency. It describes how the number of steps increase as the data increases.
+
+### O(N) vs. O(1)
+
+Let's take a look at two algorithms.
+
+One algorithm has a constant time and takes 100 steps.
+
+The second algorithm has an O(N).
+
+Which one of these two algorithms would be faster?
+
+We can say that up until 100 elements, the algorithm with a running time of O(N) is faster, but for arrays or data sets that are larger than 100, we can say that the O(1) is faster.
+
+The same logic applies regardless of the amount of steps an algorithm with a constant time has. For example, if an algorithm with a running time O(1) takes 1 million steps, we can say that O(N) will be faster as long as the data set is not bigger than 1 million elements. However, once the input is bigger than 1 million, then O(1) is faster.
+
+As previously mentioned, Big-O notation is concerned with the worst-case scenarios of an algorithm, so we can say that an O(1) algorithm is always faster than a O(N) algorithm.
+
+### Binary search and O(log N)
+
+When talking about binary search, we mentioned that the base condition to use binary search is to have an ordered array.
+
+We also established that a binary search is faster than linear search because the elements for searching in the dataset are halved with each step.
+
+So far, we have mentioned two types of algorithms: O(N) and O(1).
+
+Binary search __cannot__ fit into O(N) because the number of steps doesn't linearly increase with the number of data elements in an array.
+
+Binary search __cannot__ fit into O(1) because it doesn't have a constant time or in other words, the number of steps increases as the number of data elements increases.
+
+Binary search falls somewhere in between O(1) and O(N). In terms of Big-O notation, we can say that it has a time complexity of __O(log N)__.
+
+This type of algorithm is also known as having a time complexity of __log time__.
+
+In other words, O(log N) describes an algorithm that __increases one step each time the data is doubled__.
+
+### Logarithms
+
+To better understand the algorithm with time complexity of O(log N) we need to understand __logarithms__.
+
+Logarithms are a mathematical concept. They are the __inverse of exponents__.
+
+Exponents are the following:
+
+2^3 = 2 * 2 * 2
+
+which is 8.
+
+An example of a logarithm would be log~2 8. This is the converse to an exponent. Namely, how many times do we have to multiple 2 by itself to get 8?
+
+Because we have to multiply 2 by itself 3 times to get 8, we can say log~2 8 = 3.
+
+Another way to calculate the result of a logarithm is the following:
+
+Given a logarithm of log~2 64 we need to, __divide 64 by 2 until we get 1 (one)__:
+
+64 / 2 / 2 / 2 / 2 / 2 / 2 = 1
+
+Since there are six 2s, we can say that log~2 64 = 6.
+
+### O(log N)
+
+In terms of Big-O notation in computer science, whenever we say O(log N), we actually mean O(log~2 N). The small/subscript 2 is __omitted__ for convenience.
+
+So if we go back to the original question, _if there are N data elements, how many steps will an algorithm take?_
+
+We can say that the algorithm O(log N) would take __log~2 N steps__. So, if there are 8 elements, the algorithm would take 3 steps because __log~2 8 = 3\__
