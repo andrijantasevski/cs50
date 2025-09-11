@@ -2140,3 +2140,126 @@ N elements  O(N)  O(log N)
 1024        1024  10
 
 From the data above we can once again say that the O(N) algorithm takes as many steps as there are data elements and the O(log N) algorithm takes only 1 step extra as the data doubles.
+
+### Omega Notation (Ω-notation)
+
+Omega Notation (Ω-notation) is used to analyze the __best-case__ scenario of an algorithm, as opposed to Big-O notation, which is used to analyze the worst-case scenario.
+
+We can analyze two algorithms we have mentioned so far: linear and binary search, and what is their best-case scenario.
+
+For __linear search__, we have said that the worst-case scenario is O(N), where we have to look through every element of a dataset to find the element we are looking for, if it is in last position.
+
+For __binary search__, we have said that the worst-case scenario is O(log N), which implies that the number of steps increases by 1 every time the data is doubled, or rather, we halve the data elements with each step of the algorithm.
+
+The __best-case__ scenario for a __linear search__ is when the element we are looking for is in the first position of the data set. This makes the best-case scenario __Ω(1)__, because the algorithm has to perform only 1 step.
+
+Similarly to linear search, the __best-case__ scenario for __binary search__ is __Ω(1)__, because the element we are looking for could be in the middle of the ordered array, which means that the algorithm has to take only 1 step.
+
+### Theta Notation (Θ)
+
+Theta Notation (Θ) is used to analyze the __average-case__ scenario of an algorithm. That is when an algorithm performs the same both in the __best-case__ and the __worst-case__ scenario.
+
+Theta notation does not apply to linear and binary search, because their __best-case__ and __worst-case__ scenarios are not the same. For linear search, for example, the best case is __Ω(1)__, whereas the worst-case is __O(N)__.
+
+The same can be said for binary search, which has different best-case and worst-case scenarios. Namely, they are __O(log N)__ and __Ω(1)__.
+
+### Searching numbers and strings
+
+Performing a linear search on __numbers__, in our case integers, is very straightforward:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void)
+{
+    int numbers[] = {1, 2, 3, 4, 5};
+
+    int n = get_int("Number: ");
+    for (int i = 0; i < 5; i++)
+    {
+        if (numbers[i] == n)
+        {
+            printf("Found\n");
+            return 0;
+        }
+    }
+
+    printf("Not found\n");
+    return 1;
+}
+```
+
+What we do in the code above is we iterate over the elements of the array and we compare each element of the array to the int we got from the standard input. If the element is present in the array, we print out Found to standard output and if not found, we print out Not found to standard output.
+
+Performing a linear search on __strings__ is not so straightforward because we cannot compare two strings in the same way that we compare integers with the __== sign__. Instead, we have two options, we can either compare each of the chars of the strings by iterating over each string or we can use a standard function called __strcmp__, which can be found in the standard library __string.h__.
+
+The first option would involve us writing our own implementation, whereas strcmp does it for us and just returns a result if the strings are equal.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+    string strings[] = {"battleship", "thimble", "cannon", "iron"};
+
+    string s = get_string("String: ");
+
+    for (int i = 0; i < 4; i++)
+    {
+        if (strcmp(strings[i], s) == 0)
+        {
+            printf("Found\n");
+            return 0;
+        }
+    }
+
+    printf("Not found\n");
+    return 1;
+}
+```
+
+__strcmp__ works by comparing each of the characters of the string until it reaches the end of the string or the first character that is different.
+
+It is case-sensitive and it compares the __ASCII values__ of the characters.
+
+It returns a __negative value__ if the first differing character in str1 has a lower ASCII value than the corresponding character in str2, meaning that str1 is less than str2.
+
+It returns a __positive value__ if the first differing character in str1 has a higher ASCII value than the corresponding character in str2, meaning that str1 is greater than str2.
+
+It returns __zero__ if both strings are identical.
+
+### Structs
+
+Let's create a very primitive phonebook from the data structure we have been working on so far: arrays.
+
+Let's also search for a name from that phonebook and return the number for the name.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+    string names[] = {"David", "John", "Yuliia"};
+    string numbers = {"+1-617-495-1000", "1+949-468-2750", "+1-617-495-1000"};
+
+    string name = get_string("Name: ");
+    for (int i = 0; i < 3; i++)
+    {
+        if (strcmp(names[i], name) == 0)
+        {
+            printf("Number: %i\n", numbers[i]);
+            return 0;
+        }
+    }
+
+    printf("Not found\n");
+    return 1;
+}
+```
+
+While this code works, its design is not the best because we have mapped each name to the number by their index. If we change the position of a name or a number, our logic will no longer work.
