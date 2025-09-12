@@ -2262,4 +2262,68 @@ int main(void)
 }
 ```
 
-While this code works, its design is not the best because we have mapped each name to the number by their index. If we change the position of a name or a number, our logic will no longer work.
+While this code works, its design is not the best because we have mapped each name to the number by their index. If we change the position of a name or a number, our logic will no longer work because the data will not longer be mapped properly.
+
+To help us solve this problem, we can introduce a new data structure called __structs__.
+
+Structs allow us to put related data together in one structure. The related data can also be of different type, for example, a struct can house data that is of type int, char etc.
+
+For example, if we want to create an array of people it would be very useful to have a __type__ or a __data structure__ of type __person__ where we can store related data (name, age, number) about each person and encapsulate it in there.
+
+The syntax to create a new struct for a __person__ in C would be as follows:
+
+```c
+typedef struct
+{
+    string name
+    string number
+}
+person;
+```
+
+This syntax implies the following:
+
+Create a new type that is going to be a structure with the properties: name of type string and a property number of type string, and name the whole structure __person__. This means that we have a new data type called __person__, where each person has a name and a number of type string.
+
+Now let's improve our phonebook example and searching for a phone number of a person based on their name:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+typedef struct
+{
+    string name
+    number name
+} person;
+
+int main(void)
+{
+    person people[3];
+
+    people[0].name = "David";
+    people[0].name = "+1-617-495-1000";
+
+    people[1].name = "John";
+    people[1].number = "+1-949-468-2750";
+
+    people[2].name = "Yuliia";
+    people[2].number = "+1-617-495-1000";
+
+    string name = get_string("Name: ");
+
+    for (int i = 0; i < 3; i++)
+    {
+        if (strcmp(people[i].name, name) == 0)
+        {
+            printf("Found person: %s\n", people[i].number);
+            return 0;
+        }
+    }
+    printf("Not found\n");
+    return 1;
+}
+```
+By using structs, the data for each person is no longer in two separate arrays, but rather it is in one structure together, which eliminates the issue from the first example. In other words, our data is encapulated and lives together. This makes searching easier and cannot lead to data that is no longer mapped correctly.
+
+In the example above, we can also see that we can assign and access the data for each person with the __. dot notation__.
