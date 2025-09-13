@@ -2327,3 +2327,112 @@ int main(void)
 By using structs, the data for each person is no longer in two separate arrays, but rather it is in one structure together, which eliminates the issue from the first example. In other words, our data is encapulated and lives together. This makes searching easier and cannot lead to data that is no longer mapped correctly.
 
 In the example above, we can also see that we can assign and access the data for each person with the __. dot notation__.
+
+### Sorting
+
+### Bubble sort
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+void bubble_sort(int array[], int arraySize);
+void print_array(int array[], int arraySize);
+
+int main(void)
+{
+    int array[] = {10, 9, 0, 1};
+
+    int arraySize = sizeof(array) / sizeof(int);
+
+    bubble_sort(array, arraySize);
+
+    print_array(array, arraySize);
+}
+
+void print_array(int array[], int arraySize)
+{
+    for (int i = 0; i < arraySize; i++)
+    {
+        printf("%i ", array[i]);
+    }
+}
+
+void bubble_sort(int array[], int arraySize)
+{
+    int endingIndex = arraySize - 1;
+    int isSorted = 0;
+
+    while (!isSorted)
+    {
+        isSorted = 1;
+
+        for (int i = 0; i < endingIndex; i++)
+        {
+            if (array[i] > array[i + 1])
+            {
+                int temp = array[i];
+                array[i] = array[i + 1];
+                array[i + 1] = temp;
+                isSorted = 0;
+            }
+        }
+
+        endingIndex--;
+    }
+}
+```
+
+### Selection sort
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+void selection_sort(int array[], int arraySize);
+void print_array(int array[], int arraySize);
+
+int main(void)
+{
+    int array[] = {10, 9, 0, 1, 5, 30, 100, 4, 3};
+
+    int arraySize = sizeof(array) / sizeof(int);
+
+    selection_sort(array, arraySize);
+
+    print_array(array, arraySize);
+}
+
+void print_array(int array[], int arraySize)
+{
+    for (int i = 0; i < arraySize; i++)
+    {
+        printf("%i ", array[i]);
+    }
+}
+
+void selection_sort(int array[], int arraySize)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+       int smallestElementIndex = i;
+
+       for (int j = i + 1; j < arraySize; j++)
+       {
+           if (array[j] < array[smallestElementIndex])
+           {
+               smallestElementIndex = j;
+           }
+       }
+
+       if (i != smallestElementIndex)
+       {
+           int startIndexValue = array[i];
+           array[i] = array[smallestElementIndex];
+           array[smallestElementIndex] = startIndexValue;
+       }
+   }
+}
+```
