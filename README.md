@@ -1432,9 +1432,10 @@ int main(void)
     printf("\n");
 }
 ```
+
 In the code snippet above, we have introduced a new way of declaring and initializing a variable that we use in for-loops. We can inline a variable that is used as the boundary to which the loop should get to and we can use it in our condition.
 
-The variable is defined and inlined there so that the value gets calculated once, in this case the length of the string and we access only the value of the variable __length__.
+The variable is defined and inlined there so that the value gets calculated once, in this case the length of the string and we access only the value of the variable **length**.
 
 ```c
 #include <cs50.h>
@@ -1468,9 +1469,9 @@ We know that each character in C is actually just the ASCII number/integer, in t
 
 To make it uppercase, however, we can calculate the difference between the lowercase letter and the uppercase letter, which is always 32.
 
-We don't even need to hardcode the 32 itself as well, as we can calculate what is the distance between __lowercase a__ and __capital A__.
+We don't even need to hardcode the 32 itself as well, as we can calculate what is the distance between **lowercase a** and **capital A**.
 
-Even though it is great to know the underlying implementation of how we can make letters lowercase and uppercase, we can use the standard library in C called __ctype__. It has various functions, some of which are __toupper__ and __tolower__.
+Even though it is great to know the underlying implementation of how we can make letters lowercase and uppercase, we can use the standard library in C called **ctype**. It has various functions, some of which are **toupper** and **tolower**.
 
 ```c
 #include <cs50.h>
@@ -1491,10 +1492,9 @@ int main(void)
 
 This way we have simplified our code by using a standard library function that performs a similar function to what we had implemented previously.
 
-
 ### Command line arguments
 
-Command line arguments are the arguments that are passed to our program at the command line. For example, all the statements that we type after __clang__ are considered command line arguments. We can also use these command line arguments in our own programs.
+Command line arguments are the arguments that are passed to our program at the command line. For example, all the statements that we type after **clang** are considered command line arguments. We can also use these command line arguments in our own programs.
 
 ```c
 #include <cs50.h>
@@ -1528,19 +1528,19 @@ int main(int argc, string argv[])
 
 So far in our code, we have been creating our functions with a void type for the argument list because we did not read or need the command line arguments.
 
-The main function takes __2 arguments__, which are __argc__ and __argv__.
+The main function takes **2 arguments**, which are **argc** and **argv**.
 
-The argument __argc__ is of type __int__ and it gives us the amount of arguments that have been passed to the main function.
+The argument **argc** is of type **int** and it gives us the amount of arguments that have been passed to the main function.
 
-The argument __argv__ is an __array of strings__ and it gives us the values of the parameters that have been passed to the main function.
+The argument **argv** is an **array of strings** and it gives us the values of the parameters that have been passed to the main function.
 
-The __first parameter__ that is passed to the main function is _always_ the __name of the program__ whereas the other parameters are the ones we pass to the program as the users.
+The **first parameter** that is passed to the main function is _always_ the **name of the program** whereas the other parameters are the ones we pass to the program as the users.
 
 Technically, the parameters can be named anything we want to, but it is the convention to name them argc and argv.
 
-The name __argc__ means __argument count__, which is associated with its use.
+The name **argc** means **argument count**, which is associated with its use.
 
-The name __argv__ means __argument vector__.
+The name **argv** means **argument vector**.
 
 In our program above, we are checking if the number of argument is 2. This means that we passed only 1 argument becuase the first one is always the name of the program. If we have passed 2 arguments, we just print out hello and the value provided to the program in the first argument.
 
@@ -1556,13 +1556,14 @@ int main(int argc, string argv[])
     }
 }
 ```
+
 In the example above, we are printing out all the arguments provided to a program by creating a for-loop based on the amount of arguments passed to the main function.
 
-It is important not to overstep the bounds of the argv array because it is very likely that we get a __segmentation fault__.
+It is important not to overstep the bounds of the argv array because it is very likely that we get a **segmentation fault**.
 
 ### Exit status
 
-The reason as to why the main function has a __return__ type of __int__ is because programs have a convention of returning an int when they finish, either successfully or unsuccessfully. The integers that they exit with are called __exit codes__ or an __exit status__.
+The reason as to why the main function has a **return** type of **int** is because programs have a convention of returning an int when they finish, either successfully or unsuccessfully. The integers that they exit with are called **exit codes** or an **exit status**.
 
 By convention, whenever a program exits with the integer 0, it means that it has executed successfully and that there are no errors. When the program exits with an integer other than 0, it means that it has not executed successfully.
 
@@ -1587,23 +1588,24 @@ int main(int argc, string argv[])
 
 In the program above, we return 1 if the number of arguments is different than 2, which means that the program did not execute successfully. If it executes successfully, it prints out the greeting and returns a status 0.
 
-To check the exit status code of the most recently executed program, we can use the following command in the terminal: __echo $?__.
+To check the exit status code of the most recently executed program, we can use the following command in the terminal: **echo $?**.
 
 ### Encryption
 
 Encryption is the art of ciphering and deciphering a message.
 
-Encryption is basically a process of __scrambling__ information but in a __reversible__ way, because it would be pointless if we scramble the information and then can't unscramble it back.
+Encryption is basically a process of **scrambling** information but in a **reversible** way, because it would be pointless if we scramble the information and then can't unscramble it back.
 
-The input is what we call a __plaintext__ and the scrambled text is the __ciphertext__.
+The input is what we call a **plaintext** and the scrambled text is the **ciphertext**.
 
-The function that scrambles the text or performs the action of ciphering is called __cipher__.
+The function that scrambles the text or performs the action of ciphering is called **cipher**.
 
-Ciphers rely on __keys__ or __secrets__, which are provided to the cipher as the second input besides the plaintext.
+Ciphers rely on **keys** or **secrets**, which are provided to the cipher as the second input besides the plaintext.
 
-Caesar's cipher is a technique where we pass a plaintext and a number as a key, which would be the number of letters that we want to rotate each letter of the alphabet for. For example, for a very simple case, if we pass the plaintext __A__ and the key __one (1)__, we would rotate the letter 1 place and we would get the letter __B__ as the cipher text.
+Caesar's cipher is a technique where we pass a plaintext and a number as a key, which would be the number of letters that we want to rotate each letter of the alphabet for. For example, for a very simple case, if we pass the plaintext **A** and the key **one (1)**, we would rotate the letter 1 place and we would get the letter **B** as the cipher text.
 
 If we want to decrypt that message, we need to pass a key again, but in that case we would need to pass -1, which would rotate the letter of the alphabet one letter back and we would get the original text again, which was A.
+
 ### Functions
 
 Nearly all languages have the concept of a function, but we can find that functions are named differently across languages.
@@ -1851,6 +1853,7 @@ Previously, we said that arrays are data structures that can store N-amount of e
 ```c
 int numbers[] = {1, 2, 3};
 ```
+
 For example, in this case, the numbers 1, 2 and 3 are stored one after the other in memory or contiguously.
 
 If we want to find a specific number in that array, let's say the number 3, we as humans can just take a look at it and say that it is in the last position. However, the computer doesn't know that the number 3 is in the last position or the index 2 of the array.
@@ -1859,7 +1862,7 @@ We can therefore imagine that these values are hidden behind a closed door that 
 
 For the search of the value 3 to be effective and repeatable, we need to do it methodically with an algorithm.
 
-One of the simplest methods for searching for an element in array is __linear search__.
+One of the simplest methods for searching for an element in array is **linear search**.
 
 In linear search, the idea of the algorithm is to iterate across the array from left to right, searching for a specified element.
 
@@ -1878,13 +1881,13 @@ So, if we want to find the int 3 in the array of 1, 2, 3, we would take the foll
 
 If we wanted to find the number 4 in the array of 1, 2, 3, we would have performed all the steps, but we wouldn't have found the number 4 as it is nonexistent. This doesn't mean that the algorithm failed, it just didnt't find the number we were looking for.
 
-Therefore, the __worst-case scenario__ for linear search is that we have to look through the entire array of n elements, either because the target is the __last__ element or it doesn't exist in the array at all.
+Therefore, the **worst-case scenario** for linear search is that we have to look through the entire array of n elements, either because the target is the **last** element or it doesn't exist in the array at all.
 
-The __best-case scenario__, on the other hand, would be for the target element to be the __first__ element in the array, so we can stop looking immediately after we start.
+The **best-case scenario**, on the other hand, would be for the target element to be the **first** element in the array, so we can stop looking immediately after we start.
 
-We can say that the worst-case scenario takes __N amount of steps__, in this case, if the array is 500 elements, it would take 500 steps.
+We can say that the worst-case scenario takes **N amount of steps**, in this case, if the array is 500 elements, it would take 500 steps.
 
-In the best-case scenario it would take __1 step__ no matter the size of the array if the element we are looking for is in the first place of the array.
+In the best-case scenario it would take **1 step** no matter the size of the array if the element we are looking for is in the first place of the array.
 
 ```c
 #include <stdio.h>
@@ -1918,17 +1921,17 @@ int linear_search_int(int array[], int target)
 
 ## Binary search
 
-There are other more efficient algorithms for searching through an array, one of those algorithms is called __binary search__.
+There are other more efficient algorithms for searching through an array, one of those algorithms is called **binary search**.
 
-As opposed to linear search, binary search has a __precondition__: the array needs to be __sorted__. If the array is not sorted, then we cannot make assumptions about the array's contents.
+As opposed to linear search, binary search has a **precondition**: the array needs to be **sorted**. If the array is not sorted, then we cannot make assumptions about the array's contents.
 
-The idea of the algorithm for binary search is __divide and conquer__.
+The idea of the algorithm for binary search is **divide and conquer**.
 
 A divide-and-conquer algorithm recursively breaks down a problem into two or more sub-problems of the same related type, until these become simple enough to be solved directly.
 
-__Binary search__ works by reducing the search area by __half__ each time, trying to find a target number.
+**Binary search** works by reducing the search area by **half** each time, trying to find a target number.
 
-The __pseudocode__ for binary search is the following:
+The **pseudocode** for binary search is the following:
 
 - Repeat until the (sub)array is of size 0:
 - Calculate the middle point of the current (sub)array
@@ -1981,15 +1984,16 @@ int binary_search(int array[], int sortedArraySize, int target)
     return 0;
 }
 ```
+
 ### Binary search vs. linear search
 
 So far we have seen that when we are searching for an element using linear search, the steps of the algorithm increase as the data increases. For example, if we have an array of 100 elements and the element is in last place, the algorithm would take 100 steps to complete as it would have to check every element in the array.
 
 In contrast, we can notice that binary search eliminates half of the elements every time we perform a step of searching. So if we have an array of 100 elements, it would take us 7 steps in the worst case to find the element we are looking for.
 
-The amount of steps performed when searching for an element with linear search always __grows linearly__ with the amount of elements of the dataset or array, as the name itself implies.
+The amount of steps performed when searching for an element with linear search always **grows linearly** with the amount of elements of the dataset or array, as the name itself implies.
 
-The amount of steps performed increases when searching for an element with __binary search__ as we __double__ the elements in the data set.
+The amount of steps performed increases when searching for an element with **binary search** as we **double** the elements in the data set.
 
 ### Running time
 
@@ -2001,7 +2005,7 @@ Instead, the efficiency of algorithms is measured in the number of steps an algo
 
 ### Asymptotic notation
 
-To help quantify the efficiency of an algorithm, we use __asymptotic notation__ in computer science. Specifically, it is used to easy communication regarding __time complexity__.
+To help quantify the efficiency of an algorithm, we use **asymptotic notation** in computer science. Specifically, it is used to easy communication regarding **time complexity**.
 
 There are mainly three asymptotic notations:
 
@@ -2023,11 +2027,11 @@ It aims to give an answer to the following question: _if there are N data elemen
 
 Let's apply this question to linear search.
 
-For an array or data set of __N data elements__, linear search would take __N amount of steps__.
+For an array or data set of **N data elements**, linear search would take **N amount of steps**.
 
-In other words, we can say that linear search is O(N) or __Big O of N__. It can also be referred to as __Order of N__.
+In other words, we can say that linear search is O(N) or **Big O of N**. It can also be referred to as **Order of N**.
 
-If an algorithm has an O(N), we can also say that it has __linear time__.
+If an algorithm has an O(N), we can also say that it has **linear time**.
 
 The most common Big-O notations are the following:
 
@@ -2039,15 +2043,15 @@ The most common Big-O notations are the following:
 
 ### O(1)
 
-When we read elements from an array by their index, we can say that the algorithm takes __1 step__ regardless of the amount of data elements. Expressed in Big-O notation, we can say that it would take __O(1)__.
+When we read elements from an array by their index, we can say that the algorithm takes **1 step** regardless of the amount of data elements. Expressed in Big-O notation, we can say that it would take **O(1)**.
 
 So, now if we ask the question from above again, _if there are N data elements, how many steps will the algorithm take?_, the answer would be that the reading takes only one step.
 
-We can observe from this example that the answer has nothing to do with N. In fact, as the input scales, the reading from the array will __always__ take __one step__. This makes O(1) the fastest kind of algorithm because there is only 1 step no matter the size of the input.
+We can observe from this example that the answer has nothing to do with N. In fact, as the input scales, the reading from the array will **always** take **one step**. This makes O(1) the fastest kind of algorithm because there is only 1 step no matter the size of the input.
 
-We also refer to algorithms that have O(1) as algorithms with a __constant time__.
+We also refer to algorithms that have O(1) as algorithms with a **constant time**.
 
-Based on what we have said about algorithms that have a constant time, if an algorithm consitutes of 3 steps regardless of the amount of N data elements, we might say that that algorithm is O(3). However, that is __wrong__.
+Based on what we have said about algorithms that have a constant time, if an algorithm consitutes of 3 steps regardless of the amount of N data elements, we might say that that algorithm is O(3). However, that is **wrong**.
 
 The notation O(1) does not intended to describe the amount of steps that an algorithm would take, but instead, it intends to show that the time of the algorithm is constant or rather that the number of steps does not increase as the input scales. Based on this knowledge, we can say that when an algorithm has a fixed amount of steps or has a constant time, we always mark it with O(1).
 
@@ -2055,7 +2059,7 @@ In other words, algorithms that take 1 step, 3 steps or 100 steps are the same k
 
 ### O(N)
 
-O(N) type of algorithms are different from O(1) algorithms because their performance is affected as the input increases. More specifically, it's a kind of algorithm whose steps increase __in direct proportion__ to the data as the data increases.
+O(N) type of algorithms are different from O(1) algorithms because their performance is affected as the input increases. More specifically, it's a kind of algorithm whose steps increase **in direct proportion** to the data as the data increases.
 
 O(N) algorithms tell us about the proportional relationship between the data and the algorithm's efficiency. It describes how the number of steps increase as the data increases.
 
@@ -2083,25 +2087,25 @@ We also established that a binary search is faster than linear search because th
 
 So far, we have mentioned two types of algorithms: O(N) and O(1).
 
-Binary search __cannot__ fit into O(N) because the number of steps doesn't linearly increase with the number of data elements in an array.
+Binary search **cannot** fit into O(N) because the number of steps doesn't linearly increase with the number of data elements in an array.
 
-Binary search __cannot__ fit into O(1) because it doesn't have a constant time or in other words, the number of steps increases as the number of data elements increases.
+Binary search **cannot** fit into O(1) because it doesn't have a constant time or in other words, the number of steps increases as the number of data elements increases.
 
-Binary search falls somewhere in between O(1) and O(N). In terms of Big-O notation, we can say that it has a time complexity of __O(log N)__.
+Binary search falls somewhere in between O(1) and O(N). In terms of Big-O notation, we can say that it has a time complexity of **O(log N)**.
 
-This type of algorithm is also known as having a time complexity of __log time__.
+This type of algorithm is also known as having a time complexity of **log time**.
 
-In other words, O(log N) describes an algorithm that __increases one step each time the data is doubled__.
+In other words, O(log N) describes an algorithm that **increases one step each time the data is doubled**.
 
 ### Logarithms
 
-To better understand the algorithm with time complexity of O(log N) we need to understand __logarithms__.
+To better understand the algorithm with time complexity of O(log N) we need to understand **logarithms**.
 
-Logarithms are a mathematical concept. They are the __inverse of exponents__.
+Logarithms are a mathematical concept. They are the **inverse of exponents**.
 
 Exponents are the following:
 
-2^3 = 2 * 2 * 2
+2^3 = 2 _ 2 _ 2
 
 which is 8.
 
@@ -2111,7 +2115,7 @@ Because we have to multiply 2 by itself 3 times to get 8, we can say log~2 8 = 3
 
 Another way to calculate the result of a logarithm is the following:
 
-Given a logarithm of log~2 64 we need to, __divide 64 by 2 until we get 1 (one)__:
+Given a logarithm of log~2 64 we need to, **divide 64 by 2 until we get 1 (one)**:
 
 64 / 2 / 2 / 2 / 2 / 2 / 2 = 1
 
@@ -2119,53 +2123,53 @@ Since there are six 2s, we can say that log~2 64 = 6.
 
 ### O(log N)
 
-In terms of Big-O notation in computer science, whenever we say O(log N), we actually mean O(log~2 N). The small/subscript 2 is __omitted__ for convenience.
+In terms of Big-O notation in computer science, whenever we say O(log N), we actually mean O(log~2 N). The small/subscript 2 is **omitted** for convenience.
 
 So if we go back to the original question, _if there are N data elements, how many steps will an algorithm take?_
 
-We can say that the algorithm O(log N) would take __log~2 N steps__. So, if there are 8 elements, the algorithm would take 3 steps because __log~2 8 = 3\__.
+We can say that the algorithm O(log N) would take **log~2 N steps**. So, if there are 8 elements, the algorithm would take 3 steps because \_\_log~2 8 = 3\_\_.
 
 To put it in other words, if we keep dividing the 8 elements in half, it would take us three steps to end up with 1 element. We basically divide the array in half until we narrow our search down to the correct number.
 
-We can then conclude that __O(log N) algorithm takes as many steps as it takes to keep halving the data elements until we remain with 1.__
+We can then conclude that **O(log N) algorithm takes as many steps as it takes to keep halving the data elements until we remain with 1.**
 
-N elements  O(N)  O(log N)
-8           8     3
-16          16    4
-32          32    5
-64          64    6
-128         128   7
-256         256   8
-512         512   9
-1024        1024  10
+N elements O(N) O(log N)
+8 8 3
+16 16 4
+32 32 5
+64 64 6
+128 128 7
+256 256 8
+512 512 9
+1024 1024 10
 
 From the data above we can once again say that the O(N) algorithm takes as many steps as there are data elements and the O(log N) algorithm takes only 1 step extra as the data doubles.
 
 ### Omega Notation (Ω-notation)
 
-Omega Notation (Ω-notation) is used to analyze the __best-case__ scenario of an algorithm, as opposed to Big-O notation, which is used to analyze the worst-case scenario.
+Omega Notation (Ω-notation) is used to analyze the **best-case** scenario of an algorithm, as opposed to Big-O notation, which is used to analyze the worst-case scenario.
 
 We can analyze two algorithms we have mentioned so far: linear and binary search, and what is their best-case scenario.
 
-For __linear search__, we have said that the worst-case scenario is O(N), where we have to look through every element of a dataset to find the element we are looking for, if it is in last position.
+For **linear search**, we have said that the worst-case scenario is O(N), where we have to look through every element of a dataset to find the element we are looking for, if it is in last position.
 
-For __binary search__, we have said that the worst-case scenario is O(log N), which implies that the number of steps increases by 1 every time the data is doubled, or rather, we halve the data elements with each step of the algorithm.
+For **binary search**, we have said that the worst-case scenario is O(log N), which implies that the number of steps increases by 1 every time the data is doubled, or rather, we halve the data elements with each step of the algorithm.
 
-The __best-case__ scenario for a __linear search__ is when the element we are looking for is in the first position of the data set. This makes the best-case scenario __Ω(1)__, because the algorithm has to perform only 1 step.
+The **best-case** scenario for a **linear search** is when the element we are looking for is in the first position of the data set. This makes the best-case scenario **Ω(1)**, because the algorithm has to perform only 1 step.
 
-Similarly to linear search, the __best-case__ scenario for __binary search__ is __Ω(1)__, because the element we are looking for could be in the middle of the ordered array, which means that the algorithm has to take only 1 step.
+Similarly to linear search, the **best-case** scenario for **binary search** is **Ω(1)**, because the element we are looking for could be in the middle of the ordered array, which means that the algorithm has to take only 1 step.
 
 ### Theta Notation (Θ)
 
-Theta Notation (Θ) is used to analyze the __average-case__ scenario of an algorithm. That is when an algorithm performs the same both in the __best-case__ and the __worst-case__ scenario.
+Theta Notation (Θ) is used to analyze the **average-case** scenario of an algorithm. That is when an algorithm performs the same both in the **best-case** and the **worst-case** scenario.
 
-Theta notation does not apply to linear and binary search, because their __best-case__ and __worst-case__ scenarios are not the same. For linear search, for example, the best case is __Ω(1)__, whereas the worst-case is __O(N)__.
+Theta notation does not apply to linear and binary search, because their **best-case** and **worst-case** scenarios are not the same. For linear search, for example, the best case is **Ω(1)**, whereas the worst-case is **O(N)**.
 
-The same can be said for binary search, which has different best-case and worst-case scenarios. Namely, they are __O(log N)__ and __Ω(1)__.
+The same can be said for binary search, which has different best-case and worst-case scenarios. Namely, they are **O(log N)** and **Ω(1)**.
 
 ### Searching numbers and strings
 
-Performing a linear search on __numbers__, in our case integers, is very straightforward:
+Performing a linear search on **numbers**, in our case integers, is very straightforward:
 
 ```c
 #include <cs50.h>
@@ -2192,7 +2196,7 @@ int main(void)
 
 What we do in the code above is we iterate over the elements of the array and we compare each element of the array to the int we got from the standard input. If the element is present in the array, we print out Found to standard output and if not found, we print out Not found to standard output.
 
-Performing a linear search on __strings__ is not so straightforward because we cannot compare two strings in the same way that we compare integers with the __== sign__. Instead, we have two options, we can either compare each of the chars of the strings by iterating over each string or we can use a standard function called __strcmp__, which can be found in the standard library __string.h__.
+Performing a linear search on **strings** is not so straightforward because we cannot compare two strings in the same way that we compare integers with the **== sign**. Instead, we have two options, we can either compare each of the chars of the strings by iterating over each string or we can use a standard function called **strcmp**, which can be found in the standard library **string.h**.
 
 The first option would involve us writing our own implementation, whereas strcmp does it for us and just returns a result if the strings are equal.
 
@@ -2221,15 +2225,15 @@ int main(void)
 }
 ```
 
-__strcmp__ works by comparing each of the characters of the string until it reaches the end of the string or the first character that is different.
+**strcmp** works by comparing each of the characters of the string until it reaches the end of the string or the first character that is different.
 
-It is case-sensitive and it compares the __ASCII values__ of the characters.
+It is case-sensitive and it compares the **ASCII values** of the characters.
 
-It returns a __negative value__ if the first differing character in str1 has a lower ASCII value than the corresponding character in str2, meaning that str1 is less than str2.
+It returns a **negative value** if the first differing character in str1 has a lower ASCII value than the corresponding character in str2, meaning that str1 is less than str2.
 
-It returns a __positive value__ if the first differing character in str1 has a higher ASCII value than the corresponding character in str2, meaning that str1 is greater than str2.
+It returns a **positive value** if the first differing character in str1 has a higher ASCII value than the corresponding character in str2, meaning that str1 is greater than str2.
 
-It returns __zero__ if both strings are identical.
+It returns **zero** if both strings are identical.
 
 ### Structs
 
@@ -2264,13 +2268,13 @@ int main(void)
 
 While this code works, its design is not the best because we have mapped each name to the number by their index. If we change the position of a name or a number, our logic will no longer work because the data will not longer be mapped properly.
 
-To help us solve this problem, we can introduce a new data structure called __structs__.
+To help us solve this problem, we can introduce a new data structure called **structs**.
 
 Structs allow us to put related data together in one structure. The related data can also be of different type, for example, a struct can house data that is of type int, char etc.
 
-For example, if we want to create an array of people it would be very useful to have a __type__ or a __data structure__ of type __person__ where we can store related data (name, age, number) about each person and encapsulate it in there.
+For example, if we want to create an array of people it would be very useful to have a **type** or a **data structure** of type **person** where we can store related data (name, age, number) about each person and encapsulate it in there.
 
-The syntax to create a new struct for a __person__ in C would be as follows:
+The syntax to create a new struct for a **person** in C would be as follows:
 
 ```c
 typedef struct
@@ -2283,7 +2287,7 @@ person;
 
 This syntax implies the following:
 
-Create a new type that is going to be a structure with the properties: name of type string and a property number of type string, and name the whole structure __person__. This means that we have a new data type called __person__, where each person has a name and a number of type string.
+Create a new type that is going to be a structure with the properties: name of type string and a property number of type string, and name the whole structure **person**. This means that we have a new data type called **person**, where each person has a name and a number of type string.
 
 Now let's improve our phonebook example and searching for a phone number of a person based on their name:
 
@@ -2324,13 +2328,53 @@ int main(void)
     return 1;
 }
 ```
+
 By using structs, the data for each person is no longer in two separate arrays, but rather it is in one structure together, which eliminates the issue from the first example. In other words, our data is encapulated and lives together. This makes searching easier and cannot lead to data that is no longer mapped correctly.
 
-In the example above, we can also see that we can assign and access the data for each person with the __. dot notation__.
+In the example above, we can also see that we can assign and access the data for each person with the **. dot notation**.
 
 ### Sorting
 
 ### Bubble sort
+
+Bubble sort is a sorting algorithm that works repeatedly swapping elements to "bubble" larger elements to the end.
+
+The pseudocode for bubble sort is:
+
+```
+- Repeat n-1 times
+  - For i from 0 to n-2
+    - If numbers[i] and numbers[i+1] out of order
+      - Swap them
+  - If no swaps
+    - Quit
+```
+
+or
+
+```
+- Set swap counter to a non-zero value
+- Repeat until the swap counter is 0:
+  - Reset swap counter to 0
+  - Look at each adjacent pair
+  - If two adjacent elements are not in order, swap them and add one to the swap counter
+```
+
+As we further sort the array, we know more and more of it becomes sorted, so we only need to look at the numbers that haven't been sorted yet. Namely, all the values that get bubbled up to the sorted side do not need to be checked anymore because we have already sorted them.
+
+Bubble sort can be analyze as follows:
+
+```
+(𝑛 − 1) × (𝑛 − 1)
+𝑛2 − 𝑛 − 𝑛 + 2
+𝑛2 − 2𝑛 + 1
+```
+
+More simply, this can be summarized as O(n2).
+
+For bubble sort, the **worst case** or **upper bound** is in the order of **O(n2)**. This means that the array is in reverse order and we need to bubble each of the n elements all the way across the array, since we can only fully bubble one element into position with each pass, we must do this n times.
+
+In the **best case** or **lower bound**, it is in the order of **Ω(n)**. In other words, if all the elements are sorted and the algorithm performs no swaps, it is going to have to perform only one run-through.
 
 ```c
 #include <stdio.h>
@@ -2386,6 +2430,24 @@ void bubble_sort(int array[], int arraySize)
 
 ### Selection sort
 
+The idea in selection sort is to find the **smallest unsorted** element and add it to the end of the **sorted** list.
+
+In pseudocode the algorithm looks like this:
+
+```
+- For i from 0 to n-1
+  - Find smallest number between numbers[i] and numbers[n-1]
+  - Swap the smallest number with numbers[i]
+```
+
+or
+
+```
+- Repeat until no unsorted elements remain
+  - Search the unsorted part of the data to find the smallest value
+  - Swap the smallest found value with the first element of the unsorted part
+```
+
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -2436,3 +2498,24 @@ void selection_sort(int array[], int arraySize)
    }
 }
 ```
+
+In the worst-case scenario of selection sort, we have to iterate over each of the n elements of the array to find the smallest unsorted element and we must repeat this process n times, since only one element gets sorted on each pass.
+
+This means that that the **worst case** or **upper bound** for selection sort is in the order of **O(n2)**.
+
+In the **best case** or **lower bound**, it is in the order of **Ω(n2)**, since there is no way to guarantee that the array is sorted until we go through this process for all the elements.
+
+The average-case for selection sort is **Θ(n2)**, since both the worst-case and best-case take the same amount of steps.
+
+### Recursion
+
+The definition of a recursive function is one that, as part of its execution, invokes itself. To put it more simply, a recursive function is a function that calls itself.
+
+Every recursive function has two cases that could apply, given any input:
+
+- The **base case**, which when triggered will terminate the recursive process.
+- The **recursive case**, which is where the recursion will actually occur.
+
+If we do not have a base case, our recursive function will be stuck in an infinite loop and it will run out of memory.
+
+### Call stacks
