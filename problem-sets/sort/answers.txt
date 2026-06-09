@@ -1,0 +1,11 @@
+sort1 uses: bubble sort
+
+How do you know?: Runs in O(n) on sorted50000 and is very fast, but is O(n2) and slow on reversed50000.
+
+sort2 uses: merge sort
+
+How do you know?: Executes the fastest on reversed50000, as it has runtime of O(nlogn), as opposed to bubble sort and insertion sort where in the worst case (reversed list), they have a runtime of O(n2).
+
+sort3 uses: selection sort
+
+How do you know?: It has to go through each of element of the array and then find the smallest value for each iteration even on sorted elements. The sorted50000 takes a long time to execute as opposed to sort1 and sort2. As bubble sort exits if no swaps were performed and merge sort has a O(n logn).
