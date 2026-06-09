@@ -2518,4 +2518,250 @@ Every recursive function has two cases that could apply, given any input:
 
 If we do not have a base case, our recursive function will be stuck in an infinite loop and it will run out of memory.
 
+A common use case for recursion in maths is **factorial**. It is written as **n!** where **n** is a positive number, for example **6!**.
+
+Factorial is the product of all the numbers up to and including the number we pass as an argument to the function. In other words n! equals al of the positive integers less than or equal to n, multiplied together. Namely, factorial of 6 of 6! is:
+
+```
+6! = 6 * 5 * 4 * 3 * 2 * 1
+```
+
+To represent the factorial function programmatically, we can also create a function called **fact(int n)**.
+
+```c
+fact(1) = 1
+fact(2) = 2 * 1
+fact(3) = 3 * 2 * 1
+fact(4) = 4 * 3 * 2 * 1
+fact(5) = 5 * 4 * 3 * 2 * 1
+```
+
+In the example above, we can notice that the **base case** is the number **1** or it's the place which will terminate the recursive process. In all the other cases, recursion occurs.
+
+We can further restructure our program like this:
+
+```c
+fact(1) = 1
+fact(2) = 2 * fact(1) // 2 * 1
+fact(3) = 3 * fact(2) // 3 * 2 * 1
+fact(4) = 4 * fact(3) // 4 * 3 * 2 * 1
+fact(5) = 5 * fact(4) // 5 * 4 * 3 * 2 * 1
+```
+
+We can generalize the problem and say:
+
+```c
+fact(n) = n * fact(n-1)
+```
+
+Then this is what the full implementation would look like:
+
+```c
+int fact(int n)
+{
+    // base case
+    if (n == 1)
+    {
+        return 1
+    }
+
+    // recursive case
+    return n * fact(n-1)
+}
+```
+
+In general, but not always, recursive functions replace loops in non-recursive functions. For example, our factorial function can also be rewritten with a loop.
+
+```c
+int fact(int n)
+{
+    int currentNumber = n;
+    int product = 1;
+    while (currentNumber > 0)
+    {
+       product *= currentNumber;
+       currentNumber--;
+    }
+
+    return product;
+}
+```
+
+A real-life use case for factorial is in calculating permutations. For example, if we want to find out the amount of combinations 6 books can be organized, we can calculate by using factorial of 6.
+
+It is also possible to have **more than one base or recursive case**, if the program might recurse or terminate in different ways, depending on the input being passed in.
+
+The Fibonacci sequence is an example of a recursive function, which has multiple base cases. Namely, if the first element is 0 or if the second element is 1.
+
+A number at a specific position in the Fibonacci sequence can be found with the sum of the (n - 1) and (n - 2) elements, in other words, it is the sum of the two preceding numbers in the sequence.
+
+```
+0 - 0
+1 - 1
+2 - 1
+3 - 2
+4 - 3
+5 - 5
+6 - 8
+7 - 13
+```
+
+The formula is:
+
+```
+F(n) = F(n - 1) + F(n - 2)
+```
+
+Similarly to the factorial function, fibonacci can be expressed in the following way:
+
+```
+fib(0) = 0
+fib(1) = 1
+fib(2) = fib(1) + fib(0)
+fib(3) = fib(2) + fib(1)
+fib(4) = fib(3) + fib(2)
+fib(5) = fib(4) + fib(3)
+```
+
+This function finds the Fibonacci number for the specific position, starting at index 0:
+
+```c
+int fib(int n)
+{
+    if (n <= 1)
+    {
+        return n;
+    }
+
+    return fib(n - 1) + fib (n - 2)
+}
+```
+
+Dividing a number in the Fibonacci with the one preceding it, gives us the number Phi or the golden ratio: 1.618.
+
+Another example of recursion is the **Collatz conjecture**.
+
+The Collatz conjecture applies to positive integers and speculates that it is always possible to get "back to 1", if you follow these steps:
+
+- if n is 1, stop.
+- Otherwise, if n is even, repeat this process on n / 2.
+- Otherwise, if n is odd, repeat this process on 3n + 1
+
+```c
+int collatz(int n)
+{
+    if (n == 1)
+    {
+        return 0;
+    }
+
+    if ((n % 2) == 0)
+    {
+        return collatz(n / 2) + 1;
+    }
+    else
+    {
+        return collatz(3 * n  + 1) + 1;
+    }
+}
+```
+
 ### Call stacks
+
+Functions operate via a call stack.
+
+When we call a function, the system sets aside space in memory for that function to do its necessary work.
+
+This piece of memory that gets created for the function is called a **stack frame** or a **function frame**.
+
+For example, if we call a function where we declare a couple of integer variables, we create a stack frame and we give space to those integers in memory, namely we reserve 3, 4-byte chunks in memory and anything else the function may need.
+
+More than one function's stack frame may exist in memory at a given time. For instance, if we have a **main()** function which calls **move()**, which then calls **direction()**, all three of the functions have open frames and all of their declared variables and state is preserved in memory.
+
+Only one stack frame can run at a time. The stack frame that is running is called an **active stack frame**.
+
+These framers are arranged in a **stack** (a data structure). The frame for the most-recently called function is always on the top of the stack and it is called the **active stack frame**.
+
+Whenever we call a new function, a new frame is **pushed** (an action of the stack data structure) onto the top of the stack and it becomes the new active frame.
+
+When a function finishes it work, i.e. it returns or reaches the end of the function, its frame is **popped** off of the stack, and the frame immediately below it becomes the new, active, function on top of the stack. This function picks up immediately where it left off.
+
+This is actually why recursion works as well, because frames can be put on pause/hold, while other frames are running and the state is preserved.
+
+So, now we can take a look at how the stack looks like with the factorial function when it is written as a recursive function:
+
+```c
+fact(1) // reached base case, it is 1.
+fact(2) // we call factorial of 2, which is 2 * fact(1)
+fact(3) // we call factorial of 3, which is 3 * fact(2)
+fact(4) // we call factorial of 4, which is 4 * fact(3)
+fact(5) // we call factorial of 5, which is 5 * fact(4)
+main() // execution starts here
+```
+
+### Merge Sort
+
+In merge sort, the idea of the algorithm is to sort smaller arrays and then combine those arrays together (merge them) in sorted order.
+
+Merge sort leverages **recursion**.
+
+In pseudocode, the merge sort algorithm is the following:
+
+```
+- if only one number
+  - quit
+- else
+  - sort left half of numbers
+  - sort right half of numbers
+  - merge sorted halves
+```
+
+Consider the following list of numbers:
+
+```
+6341
+```
+
+First, the merge sort asks, is this one number. The answer is no, so the algorithm continues.
+
+```
+6341
+```
+
+Second, merge sort will split the numbers down the middle (or as close as it can get) and sort the left half of numbers.
+
+```
+63|41
+```
+
+Third, merge sort would look at these numbers on the left and ask is this one number? Since the answer is no, it would then split the numbers on the left down the middle:
+
+```
+6|3
+```
+
+Fourth, merge sort will again is, is this one number? The answer is is yes. Therefore, it will quit this task and return to the last task it was running at this point:
+
+```
+63|41
+```
+
+Fifth, merge sort will sort the numbers on the left:
+
+```
+36|41
+```
+
+Now, we return to where we left off in the pseudocode now that the left side has been sorted. A similar process of steps 3-5 will occur with the right-hand numbers. This will result in:
+
+```
+36|14
+```
+
+Both halves are now sorted. Finally, the algorithm will merge both sides. It will look at the first number on the left and the first number on the right, it will put the smaller number first, then the second smallest. The algorithm will repeat this for all numbers, resulting in:
+
+```
+1346
+```
+
+Merge sort is a very efficient algorithm with a worst case of **O(n logn)**. The best case is still **Ω(n logn)** because the algorithm still must visit each place in the list. Therefore, merge sort is also **Θ(n logn)** since the best case and the worst case are the same.
