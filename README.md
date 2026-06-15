@@ -2765,3 +2765,152 @@ Both halves are now sorted. Finally, the algorithm will merge both sides. It wil
 ```
 
 Merge sort is a very efficient algorithm with a worst case of **O(n logn)**. The best case is still **Ω(n logn)** because the algorithm still must visit each place in the list. Therefore, merge sort is also **Θ(n logn)** since the best case and the worst case are the same.
+
+## Week 4 - Memory
+
+### Pixels
+
+Pixels are squares, individual dots, of color that are arranged on an up-down, left-right grid.
+
+Resolution is the number of pixels of a given image or how many of those pixels exist.
+
+For digital screens, we measure pixel dimensions as **Width x Height**. For example, 1920 x 1080 means that an image is 1920 pixels **wide** and 1080 pixels **tall**.
+
+If we multiply them together, we get **2073600 total pixes** or that would be 2 megapixels (factor of 1 000 000 or 10 to the power of 6).
+
+Resolution of images is finite. This can usually be observed by zooming in on images. The more we zoom in, the more detail we see and eventually we can see the pixels that an image is composed of. This can also be observed by getting really close to a screen.
+
+### Hexadecimal
+
+Number or numeral systems is a method of representing numbers with the help of a set of symbols and rules.
+
+These systems are defined by their **base or radix**, which dictates the number of **unique digits** used before rolling over to the next place value.
+
+There are different number or numeral systems:
+
+- Base-1 (unary)
+- Base-2 (binary)
+- Base-10 (decimal)
+- Base-16 (hexadecimal)
+
+**Base-1** is the simplest and oldest method for representing numbers, where a single symbol (such as a tally or the digit 1) is repeated as many times as the number being represented.
+
+**Base-2** is a number system that represents data using only two digits: **0** and **1**. It is the language of computing and digital electronics where 0 represents **off** and 1 represents **on**.
+
+**Base-10** is a number system used for numeric notation and everyday calculation. It represents values using ten unique digits (0 through 9) and assigns place values that are powers of ten, separated by **decimal point for fractional parts**.
+
+**Base-16** is a number system that used **16 distinct symbols** to represent values: the numbers 0 to 9, and the letters A through F, where A = 10, B = 11, C = 12, D = 13, E = 14, F = 15.
+
+It's useful to be able to express data the same way a computer does. The problem, however, is that it is difficult to try and parse a huge chain of 0s and 1s.
+
+The **hexadecimal system** also known as _base-16_ is a much more concise way to express data on a computer's system.
+
+Hexadecimal makes this mapping easy because a **group of four binary digits (bits)** has **16 different combinations** and each of those combinations maps to a single hexidecimal digit. For example,
+
+```
+1111 = 15
+
+(1 * 1) + (1 * 2) + (1 * 4) + (1 * 8) = 15
+
+1111 = F
+```
+
+This is a side-by-side comparison of decimal, binary and hexadecimal:
+
+```
+Decimal       Binary        Hexadecimal
+0             0b0000        0x0
+1             0b0001        0x1
+2             0b0010        0x2
+3             0b0011        0x3
+4             0b0100        0x4
+5             0b0101        0x5
+6             0b0110        0x6
+7             0b0111        0x7
+8             0b1000        0x8
+9             0b1001        0x9
+10            0b1010        0xA
+11            0b1011        0xB
+12            0b1100        0xC
+13            0b1101        0xD
+14            0b1110        0xE
+15            0b1111        0xF
+```
+
+When referring to binary or hexidecimal numbers in computer science or programs, we use the **0b** and **0x** prefixes to denote binary or hexadecimal as we can differentiate between the different bases. For example, 0 is the same in decimal and hexadecimal. Then, 11 can mean 3 in binary, 11 in decimal and 17 in hexadecimal.
+
+Just like binary has place values (1, 2, 4, 8) and decimal does (1, 10, 100, 1000), so does hexadecimal. Instead of the values being powers of 2 or powers of 10, they are **powers of 16**.
+
+For example, for the number 0x397, we can say that 7 is in the 1s place, 9 is in the 16s place and 3 is in the 256s place. Therefore, we can convert the number:
+
+```
+0x397
+(3 * 256) + (9 * 16) + (1 * 7) = 919
+```
+
+To convert a binary number to hexadecimal, we can **group four binary digits together from right to left**.
+
+We can pad the **leftmost** group with **extra 0 bits** at the **front** if necessary.
+
+Take for example this binary number:
+
+```
+0100 0110 1010 0010 1011 1001 0011 1101
+4    6    A    2    B    9    3    D
+```
+
+The number in hexadecimal is 0x46A2B93D.
+
+As mentioned above, 4 bits can be represented with 1 hexadecimal digit, whereas 8 bits can be represented with 2 hexadecimal digits.
+
+1 byte consists of 8 bits, which means that we can represent 1 byte with 2 digits in hexadecimal instead of using 8 in binary.
+
+We can represent the number **255** as **FF**, because 16 x 15 (or F) is 240. We add 15 to make 255. This is the highest number we can count using a two-digit hexadecimal system numeral.
+
+All in all, hexadecimal is useful because it allows us to represent information more succinctly.
+
+### Memory
+
+Hexadecimal is used to mark **memory addresses** because large decimal numbers can be presented much more succintly.
+
+```c
+int main(void)
+{
+    int n = 50;
+
+    printf("%i", n);
+}
+```
+
+If we represent memory as a grid of blocks, where each block is 1 byte, we can say that the number 50 that is assigned to the variable n, takes up 4 byte blocks because the data type int uses 4 bytes (32 bits).
+
+So when we try to print the integer value with **printf**, our program goes to that piece of memory where the integer is stored, takes it and prints it to the standard output.
+
+### Pointers
+
+The C language has two powerful operators that relate to memory:
+
+- **&** provides the address of something stored in memory.
+- **\*** instructs the compiler to go to a location in memory.
+
+In the example below, we use the **&** operator to get the address of the integer n stored in memory. The **%p** format in the printf function allows us to view the address of a location in memory, in this case, it allows us to see the address of the integer n.
+
+Executing the code below gives us a memory address beginning with **0x** indicating a hexidecimal number.
+
+```c
+int main(void)
+{
+    int n = 50;
+
+    printf("%p\n", &n);
+}
+```
+
+A pointer is a variable that stores the address of something or more succintly, a pointer is an address in our computer's memory.
+
+```c
+int n = 50;
+int *p = &n;
+```
+
+In this case, **p** is a pointer that contains the address of the **int n**.
